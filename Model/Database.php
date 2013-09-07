@@ -49,7 +49,7 @@ class Database extends AppsAppModel {
 		}
 	}
 
-	public function beforeDelete() {
+	public function beforeDelete($cascade = true) {
 		$database = $this->find('first', array('conditions' => array('Database.id' => $this->id)));
 		$this->dump($database['Database']['database']);
 		return true;

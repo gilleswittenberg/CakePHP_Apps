@@ -108,7 +108,7 @@ class Application extends AppsAppModel {
 		}
 	}
 
-	public function beforeDelete () {
+	public function beforeDelete ($cascade = true) {
 		$this->deletedRow = $this->find('first', array('conditions' => array('Application.id' => $this->id)));
 		return true;
 	}
