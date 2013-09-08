@@ -47,7 +47,7 @@ class ServerAlias extends AppsAppModel {
 		)
 	);
 
-	public function beforeSave() {
+	public function beforeSave($cascade = true) {
 		if ($this->exists()) {
 			$serverAlias = $this->find('first', array('conditions' => array('ServerAlias.id' => $this->id)));
 			$this->prevDomain = $serverAlias['ServerAlias']['domain'];
@@ -64,14 +64,14 @@ class ServerAlias extends AppsAppModel {
 		$this->Application->linkConfig($serverAlias['Application']['DocumentRoot']['absolute_path'], $serverAlias['Application']['server_name'], $serverAlias['ServerAlias']['domain']);
 	}
 
-	public function beforeDelete() {
+	public function beforeDelete($cascade = true) {
 		$this->recursive = 2;
 		$serverAlias = $this->find('first', array('conditions' => array('ServerAlias.id' => $this->id)));
 		$this->prevServerAlias = $serverAlias;
 		return true;
 	}
 
-	public function afterDelete() {
+	public function afterDelete($cascade = true) {
 		$this->Application->unlinkConfig($this->prevServerAlias['Application']['DocumentRoot']['absolute_path'], $this->prevServerAlias['ServerAlias']['domain']);
 	}
 }
