@@ -67,7 +67,7 @@ class Database extends AppsAppModel {
 
 	public function createSchema($serverName, $absolutePath = APP) {
 		$cakePath = Configure::read('Apps.cakePath') ?: 'Console' . DS . 'cake';
-		exec($absolutePath . DS . $cakePath . ' -app ' . APP . ' Apps.current ' . $serverName);
+		exec($absolutePath . DS . $cakePath . ' -app ' . APP . ' apps.current ' . $serverName);
 		exec($absolutePath . DS . $cakePath . ' -app ' . $absolutePath . ' schema create --yes');
 		exec($absolutePath . DS . $cakePath . ' -app ' . $absolutePath . ' apps.run updateschemacurrent ' . $absolutePath);
 	}
