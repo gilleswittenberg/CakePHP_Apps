@@ -46,8 +46,8 @@ class ApplicationsController extends AppsAppController {
 		if ($this->request->is('post')) {
 			$this->Application->create();
 			if ($this->Application->saveAssociated($this->request->data)) {
-				$application = $this->Application->find('first', array('conditions' => array('Application.id' => $this->Application->id)));
 				$this->Session->setFlash(__('The application has been saved'));
+				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The application could not be saved. Please, try again.'));
 			}

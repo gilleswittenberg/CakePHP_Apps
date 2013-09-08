@@ -47,9 +47,5 @@
 	<ul>
 		<li><?php echo $this->Html->link(__('New Application'), array('action' => 'add')); ?></li>
 		<li><?php echo $this->Html->link(__('List DocumentRoots'), array('controller' => 'document_roots', 'action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Domains'), array('controller' => 'domains', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Domain'), array('controller' => 'domains', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Databases'), array('controller' => 'databases', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Database'), array('controller' => 'databases', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

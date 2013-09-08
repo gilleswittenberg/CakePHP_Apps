@@ -92,7 +92,7 @@ class DocumentRootsController extends AppsAppController {
 			$this->Session->setFlash(__('Document root deleted'));
 			$this->redirect(array('action' => 'index'));
 		}
-		$this->Session->setFlash(__('Document root was not deleted'));
+		$this->Session->setFlash(__('Document root was not deleted. Cause it contains Applications.'));
 		$this->redirect(array('action' => 'index'));
 	}
 }

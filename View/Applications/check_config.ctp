@@ -44,6 +44,7 @@ App::uses('Debugger', 'Utility');
 		endif;
 	?>
 </p>
+<!--
 <p>
 	<?php
 		if (is_dir(APP . Configure::read('Apps.configDir'))):
@@ -63,6 +64,7 @@ App::uses('Debugger', 'Utility');
 		endif;
 	?>
 </p>
+-->
 <?php
 foreach ($documentRoots as $documentRoot) {
 	$dir = $documentRoot['DocumentRoot']['absolute_path'] . DS . Configure::read('Apps.configDir');
