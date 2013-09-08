@@ -30,32 +30,38 @@ class RunShell extends AppShell {
 			$this->error('Cannot run updateSchema for all');
 		}
 		$applications = $this->getApplications($target);
-		$snapshot = $this->getLatestSchemaSnapshot($target);
+		if (empty($applications)) {
+			$this->error('No applications');
+		}
+		$appDir = $this->getAppDir($target);
+		$snapshot = $this->getLatestSchemaSnapshot($target . DS . $appDir);
 		if (!$snapshot) {
 			$this->error('No snapshot');
 		}
 		$command = 'schema update --snapshot ' . $snapshot . ' --yes';
  		// run schema shell
 		foreach ($applications as $application) {
-			$cakePath = Configure::read('Apps.cakePath');
-			$this->setCurrent($application['Application']['server_name'], $application['DocumentRoot']['absolute_path']);
-			exec($application['DocumentRoot']['absolute_path'] . DS . $cakePath . ' ' . $command);
+			$absolutePath = $application['DocumentRoot']['absolute_path'];
+			$this->setCurrent($application['Application']['server_name'], $absolutePath);
+			$appPath = empty($appDir) ? $absolutePath : $absolutePath . DS . $appDir;
+			exec(APP . Configure::read('Apps.cakePath') . ' -app ' . $appPath . ' ' . $command);
 		}
 	}
 
 	public function updateSchemaCurrent() {
 		$absolutePath = $this->args[0];
-		$snapshot = $this->getLatestSchemaSnapshot($absolutePath);
+		$appPath = !empty($this->args[1]) ? $absolutePath . DS . $this->args[1] : $absolutePath;
+		$snapshot = $this->getLatestSchemaSnapshot($appPath);
 		if (!$snapshot) {
 			$this->error('No snapshot');
 		}
-		$command = 'schema --app ' . $absolutePath . ' update --snapshot ' . $snapshot . ' --yes';
+		$command = 'schema -app ' . $appPath . ' update --snapshot ' . $snapshot . ' --yes';
 		$cakePath = Configure::read('Apps.cakePath');
-		exec($absolutePath . DS . $cakePath . ' ' . $command);
+		exec(APP . $cakePath . ' ' . $command);
 	}
 
-	protected function getLatestSchemaSnapshot($absolutePath) {
-		$folder = new Folder($absolutePath . DS . 'Config' . DS . 'Schema');
+	protected function getLatestSchemaSnapshot($appPath) {
+		$folder = new Folder($appPath . DS . 'Config' . DS . 'Schema');
 		$result = $folder->read();
 		$files = $result[1];
 		$snapshot = null;
@@ -67,9 +73,9 @@ class RunShell extends AppShell {
 		return $snapshot;
 	}
 
-	protected function setCurrent($application, $appDir) {
+	protected function setCurrent($application, $absolutePath) {
 		$cakePath = Configure::read('Apps.cakePath') ?: 'Console' . DS . 'cake';
-		exec($appDir . DS . $cakePath . ' Apps.current ' . $application);
+		exec(APP . $cakePath . ' Apps.current ' . $absolutePath . ' ' . $application);
 	}
 
 	protected function run($appDir, $command) {
@@ -96,6 +102,11 @@ class RunShell extends AppShell {
 			$conditions = array('DocumentRoot.absolute_path' => $target);
 		}
 		return $this->Application->find('all', array('conditions' => $conditions));
+	}
+
+	protected function getAppDir($target) {
+		$application = $this->Application->find('first', array('conditions' => array('DocumentRoot.absolute_path' => $target)));
+		return $application['DocumentRoot']['app_dir'];
 	}
 
 	protected function getCommand() {

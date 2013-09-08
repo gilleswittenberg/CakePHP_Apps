@@ -65,11 +65,11 @@ class Database extends AppsAppModel {
 		return $this->query($sql, false);
 	}
 
-	public function createSchema($serverName, $absolutePath = APP) {
+	public function createSchema($serverName, $absolutePath = APP, $appDir = '') {
 		$cakePath = Configure::read('Apps.cakePath') ?: 'Console' . DS . 'cake';
-		exec($absolutePath . DS . $cakePath . ' -app ' . APP . ' apps.current ' . $serverName);
-		exec($absolutePath . DS . $cakePath . ' -app ' . $absolutePath . ' schema create --yes');
-		exec($absolutePath . DS . $cakePath . ' -app ' . $absolutePath . ' apps.run updateschemacurrent ' . $absolutePath);
+		exec(APP . $cakePath . ' -app ' . APP . ' apps.current ' . $absolutePath . ' ' . $serverName);
+		exec(APP . $cakePath . ' -app ' . $absolutePath . DS . $appDir . ' schema create --yes');
+		exec(APP . $cakePath . ' -app ' . APP . ' apps.run updateschemacurrent ' . $absolutePath . ' ' . $appDir);
 	}
 	/*
 	public function createTables($name, $absolutePath = APP) {

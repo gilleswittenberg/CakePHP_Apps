@@ -40,6 +40,7 @@ class AppSchema extends CakeSchema {
 	public $document_roots = array(
 		'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'length' => 99, 'key' => 'primary'),
 		'absolute_path' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 199, 'key' => 'unique', 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+		'app_dir' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 49, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
 		'schema_snapshot' => array('type' => 'integer', 'null' => true, 'default' => null, 'length' => 99),
 		'modified' => array('type' => 'datetime', 'null' => true, 'default' => null),
 		'created' => array('type' => 'datetime', 'null' => true, 'default' => null),

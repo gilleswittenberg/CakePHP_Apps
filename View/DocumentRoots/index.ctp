@@ -4,6 +4,7 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('absolute_path'); ?></th>
+			<th><?php echo $this->Paginator->sort('app_dir'); ?></th>
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
@@ -12,6 +13,7 @@
 	<tr>
 		<td><?php echo h($documentRoot['DocumentRoot']['id']); ?>&nbsp;</td>
 		<td><?php echo h($documentRoot['DocumentRoot']['absolute_path']); ?>&nbsp;</td>
+		<td><?php echo h($documentRoot['DocumentRoot']['app_dir']); ?>&nbsp;</td>
 		<td><?php echo h($documentRoot['DocumentRoot']['modified']); ?>&nbsp;</td>
 		<td><?php echo h($documentRoot['DocumentRoot']['created']); ?>&nbsp;</td>
 		<td class="actions">

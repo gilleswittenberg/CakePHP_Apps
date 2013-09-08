@@ -97,7 +97,7 @@ class Application extends AppsAppModel {
 			// write CakePHP config
 			$this->writeConfig($application['DocumentRoot']['absolute_path'], $serverName, $applicationId, $applicationId, $password);
 			// init tables and rows
-			$this->Database->createSchema($serverName, $application['DocumentRoot']['absolute_path']);
+			$this->Database->createSchema($serverName, $application['DocumentRoot']['absolute_path'], $application['DocumentRoot']['app_dir']);
 			// restart Apache
 			$this->restartApache();
 		} else {
@@ -151,11 +151,13 @@ class Application extends AppsAppModel {
 		return $password;
 	}
 
+	/*
 	protected function databaseInit($absolutePath, $serverName) {
 		$cakePath = Configure::read('Apps.cakePath') ?: 'Console' . DS . 'cake';
 		exec($absolutePath . DS . $cakePath . ' apps.current ' . $serverName);
 		exec($absolutePath . DS . $cakePath . ' schema create');
 	}
+	*/
 
 	// http://bakery.cakephp.org/articles/eimermusic/2009/02/18/one-core-one-app-multiple-domains
 	protected function writeConfig($documentRoot, $serverName, $database, $login, $password) {

@@ -4,6 +4,7 @@
 		<legend><?php echo __('Add Document Root'); ?></legend>
 	<?php
 		echo $this->Form->input('absolute_path');
+		echo $this->Form->input('app_dir');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>
