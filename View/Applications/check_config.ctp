@@ -44,27 +44,7 @@ App::uses('Debugger', 'Utility');
 		endif;
 	?>
 </p>
-<!--
-<p>
-	<?php
-		if (is_dir(APP . Configure::read('Apps.configDir'))):
-			if (is_writable(APP . Configure::read('Apps.configDir'))):
-				echo '<span class="notice success">';
-					echo __d('cake_dev', 'ConfigDir is writable.');
-				echo '</span>';
-			else:
-				echo '<span class="notice">';
-					echo __d('cake_dev', 'ConfigDir is not writable.');
-				echo '</span>';
-			endif;
-		else:
-			echo '<span class="notice">';
-				echo __d('cake_dev', 'ConfigDir is not a dir.');
-			echo '</span>';
-		endif;
-	?>
-</p>
--->
+
 <?php
 foreach ($documentRoots as $documentRoot) {
 	$dir = $documentRoot['DocumentRoot']['absolute_path'] . DS . Configure::read('Apps.configDir');
