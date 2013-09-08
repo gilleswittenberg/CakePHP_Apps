@@ -1,5 +1,6 @@
 <?php
 App::uses('AppsAppModel', 'Apps.Model');
+App::uses('Sanitize', 'Utility');
 /**
  * Database Model
  *
@@ -56,11 +57,13 @@ class Database extends AppsAppModel {
 	}
 
 	public function createDatabase($name) {
+		$name = Sanitize::escape($name);
 		$sql = "CREATE DATABASE IF NOT EXISTS `$name`";
 		return $this->query($sql, false);
 	}
 
 	public function dropDatabase($name) {
+		$name = Sanitize::escape($name);
 		$sql = "DROP DATABASE IF EXISTS `$name`";
 		return $this->query($sql, false);
 	}
@@ -100,6 +103,7 @@ class Database extends AppsAppModel {
 	*/
 
 	public function createUser($user) {
+		$user = Sanitize::escape($user);
 		$password = $this->getPassword();
 		$sql = "CREATE USER '$user'@'localhost' IDENTIFIED BY '$password'";
 		$this->query($sql, false);
@@ -107,6 +111,7 @@ class Database extends AppsAppModel {
 	}
 
 	public function dropUser($user) {
+		$user = Sanitize::escape($user);
 		$sql = "DROP USER '$user'@'localhost'";
 		$this->query($sql, false);
 	}
