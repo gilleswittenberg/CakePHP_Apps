@@ -33,7 +33,7 @@ class DocumentRoot extends AppsAppModel {
 		)
 	);
 
-	public function beforeDelete ($cascade = true) {
+	public function beforeDelete($cascade = true) {
 		$documentRoot = $this->find('first', array('conditions' => array('id' => $this->id)));
 		if (!empty($documentRoot['Application'])) {
 			return false;

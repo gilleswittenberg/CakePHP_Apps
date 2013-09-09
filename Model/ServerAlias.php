@@ -54,6 +54,7 @@ class ServerAlias extends AppsAppModel {
 		}
 	}
 
+	/*
 	public function afterSave($created) {
 		$serverAlias = $this->find('first', array('recursive' => 2, 'conditions' => array('ServerAlias.id' => $this->id)));
 		if (!$created && $this->data['ServerAlias']['domain'] !== $this->prevDomain) {
@@ -63,15 +64,24 @@ class ServerAlias extends AppsAppModel {
 		$apacheLib->writeDirective($serverAlias['Application']['server_name'], $serverAlias['Application']['DocumentRoot']['absolute_path'], $serverAlias['ServerAlias']);
 		$this->Application->linkConfig($serverAlias['Application']['DocumentRoot']['absolute_path'], $serverAlias['Application']['server_name'], $serverAlias['ServerAlias']['domain']);
 	}
+	*/
+
+	public function add($id) {
+		$serverAlias = $this->find('first', array('conditions' => array('ServerAlias.id' => $id)));
+		$this->Application->linkConfig($serverAlias['Application']['DocumentRoot']['absolute_path'], $serverAlias['Appliction']['server_name'], $serverAlias['ServerAlias']['domain']);
+		$this->Application->apacheWriteDirective($serverAlias['Application']['id']);
+		$this->Application->restartApache();
+	}
 
 	public function beforeDelete($cascade = true) {
 		$this->recursive = 2;
-		$serverAlias = $this->find('first', array('conditions' => array('ServerAlias.id' => $this->id)));
-		$this->prevServerAlias = $serverAlias;
+		$this->prevServerAlias = $this->find('first', array('conditions' => array('ServerAlias.id' => $this->id)));
 		return true;
 	}
 
 	public function afterDelete($cascade = true) {
 		$this->Application->unlinkConfig($this->prevServerAlias['Application']['DocumentRoot']['absolute_path'], $this->prevServerAlias['ServerAlias']['domain']);
+		$this->Application->apacheWriteDirective($this->prevServerAlias['Application']['id']);
+		$this->Application->restartApache();
 	}
 }

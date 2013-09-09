@@ -3,7 +3,7 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('document_root_id'); ?></th>
+			<th><?php echo $this->Paginator->sort('document_root_id', __('Absolute Path')); ?></th>
 			<th><?php echo $this->Paginator->sort('server_name'); ?></th>
 			<th><?php echo $this->Paginator->sort('slug'); ?></th>
 			<th><?php echo $this->Paginator->sort('status'); ?></th>
@@ -14,7 +14,7 @@
 	<?php foreach ($applications as $application): ?>
 	<tr>
 		<td><?php echo h($application['Application']['id']); ?>&nbsp;</td>
-		<td><?php echo h($application['Application']['document_root_id']); ?>&nbsp;</td>
+		<td><?php echo h($application['DocumentRoot']['absolute_path']); ?>&nbsp;</td>
 		<td><?php echo h($application['Application']['server_name']); ?>&nbsp;</td>
 		<td><?php echo h($application['Application']['slug']); ?>&nbsp;</td>
 		<td><?php echo h($application['Application']['status']); ?>&nbsp;</td>
@@ -23,6 +23,7 @@
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $application['Application']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $application['Application']['id'])); ?>
+			<?php echo $this->Html->link(__('Add ServerAlias'), array('controller' => 'server_aliases', 'action' => 'add', $application['Application']['id'])); ?>
 			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $application['Application']['id']), null, __('Are you sure you want to delete # %s?', $application['Application']['id'])); ?>
 		</td>
 	</tr>

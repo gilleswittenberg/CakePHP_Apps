@@ -71,40 +71,52 @@ class Application extends AppsAppModel {
 		)
 	);
 
+	public function cleanEmptyServerAliases($data) {
+		if (!empty($data['ServerAlias'])) {
+			foreach ($data['ServerAlias'] as $key => $value) {
+				if (empty($value['domain'])) {
+					unset($data['ServerAlias'][$key]);
+				}
+			}
+		}
+		if (empty($data['ServerAlias'])) {
+			unset($data['ServerAlias']);
+		}
+		return $data;
+	}
+
+	public function init($id) {
+		$application = $this->find('first', array('conditions' => array('Application.id' => $id)));
+		$absolutePath = $application['DocumentRoot']['absolute_path'];
+		$appDir = $application['DocumentRoot']['app_dir'];
+		$serverName = $application['Application']['server_name'];
+		$applicationId = $application['Application']['slug'];
+		$databaseName = $application['Database']['database'];
+		$databaseLogin = $application['Database']['login'];
+		// create directive
+		$this->apacheWriteDirective($id);
+		// create database
+		$password = $this->databaseCreate($databaseName, $databaseLogin, $absolutePath);
+		// write CakePHP config
+		$this->writeConfig($absolutePath, $serverName, $applicationId, $applicationId, $password);
+		// link config for ServerAliases
+		foreach ($application['ServerAlias'] as $serverAlias) {
+			$this->linkConfig($absolutePath, $serverName, $serverAlias['domain']);
+		}
+		// init tables and rows
+		$this->Database->createSchema($serverName, $absolutePath, $appDir);
+		// restart Apache
+		$this->restartApache();
+	}
+
 	public function afterSave($created) {
 		if ($created) {
-			// application id string
 			$applicationId = 'application-' . $this->id;
-			// database fields
-			$databaseName = !empty($this->data['Database']['database']) ? $this->data['Database']['database'] : $applicationId;
-			$databaseLogin = !empty($this->data['Database']['login']) ? $this->data['Database']['login'] : $applicationId;
-			//$databasePassword = !empty($this->data['Database']['password']) ? $this->data['Database']['password'] : null;
-			// save servername
+			$data = array('slug' => $applicationId);
 			if (empty($this->data['Application']['server_name'])) {
-				$serverName = $applicationId . '.' . Configure::read('Apps.domain');
-				$this->saveField('server_name', $serverName);
-			} else {
-				$serverName = $this->data['Application']['server_name'];
+				$data['server_name'] = $applicationId . '.' . Configure::read('Apps.domain');
 			}
-			// save slug
-			$this->saveField('slug', $applicationId);
-			// create directive
-			$this->apacheWriteDirective();
-			// read absolute_path
-			$application = $this->find('first', array('conditions' => array('Application.id' => $this->id)));
-			// create database
-			$password = $this->databaseCreate($databaseName, $databaseLogin, $application['DocumentRoot']['absolute_path']);
-			// write CakePHP config
-			$this->writeConfig($application['DocumentRoot']['absolute_path'], $serverName, $applicationId, $applicationId, $password);
-			// init tables and rows
-			$this->Database->createSchema($serverName, $application['DocumentRoot']['absolute_path'], $application['DocumentRoot']['app_dir']);
-			// restart Apache
-			$this->restartApache();
-		} else {
-			$application = $this->find('first', array('conditions' => array('Application.id' => $this->id)));
-			if (!$application['Application']['status']) {
-				$this->apacheDeleteDirective($application['Application']['server_name']);
-			}
+			$this->save($data);
 		}
 	}
 
@@ -114,9 +126,9 @@ class Application extends AppsAppModel {
 	}
 
 	public function afterDelete() {
-		$this->Database->dump($this->deletedRow['Application']['slug']);
-		$this->Database->dropDatabase($this->deletedRow['Application']['slug']);
-		$this->Database->dropUser($this->deletedRow['Application']['slug']);
+		$this->Database->dump($this->deletedRow['Database']['database']);
+		$this->Database->dropDatabase($this->deletedRow['Database']['database']);
+		$this->Database->dropUser($this->deletedRow['Database']['login']);
 		$this->deleteConfig($this->deletedRow['DocumentRoot']['absolute_path'], $this->deletedRow['Application']['server_name']);
 		$apacheLib = new ApacheLib();
 		$apacheLib->disableDirective($this->deletedRow['Application']['server_name']);
@@ -125,8 +137,8 @@ class Application extends AppsAppModel {
 	}
 
 	// extracted function to easily mock out in tests
-	protected function apacheWriteDirective() {
-		$application = $this->find('first', array('conditions' => array('Application.id' => $this->id)));
+	protected function apacheWriteDirective($id) {
+		$application = $this->find('first', array('conditions' => array('Application.id' => $id)));
 		$apacheLib = new ApacheLib();
 		$apacheLib->writeDirective($application['Application']['server_name'], $application['DocumentRoot']['absolute_path'], $application['ServerAlias']);
 		$apacheLib->enableDirective($application['Application']['server_name']);
@@ -185,13 +197,13 @@ Configure::write('Database.config', array(
 		$file->delete();
 	}
 
-	public function linkConfig ($documentRoot, $serverName, $serverAlias) {
+	public function linkConfig($documentRoot, $serverName, $serverAlias) {
 		$target = $documentRoot . DS . Configure::read('Apps.configDir') . DS . $serverName . '.php';
 		$symbolic = $documentRoot . DS . Configure::read('Apps.configDir') . DS . $serverAlias . '.php';
 		exec("ln -s $target $symbolic");
 	}
 
-	public function unlinkConfig ($documentRoot, $serverAlias) {
+	public function unlinkConfig($documentRoot, $serverAlias) {
 		$symbolic = $documentRoot . DS . Configure::read('Apps.configDir') . DS . $serverAlias . '.php';
 		exec("unlink $symbolic");
 	}

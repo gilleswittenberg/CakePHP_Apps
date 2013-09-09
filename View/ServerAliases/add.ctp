@@ -3,7 +3,7 @@
 	<fieldset>
 		<legend><?php echo __('Add Server Alias'); ?></legend>
 	<?php
-		echo $this->Form->input('application_id');
+		echo $this->Form->input('application_id', array('type' => 'hidden'));
 		echo $this->Form->input('domain');
 	?>
 	</fieldset>

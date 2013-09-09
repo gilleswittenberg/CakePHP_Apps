@@ -37,18 +37,18 @@ class ServerAliasesController extends AppsAppController {
  *
  * @return void
  */
-	public function add() {
+	public function add($applicationId) {
 		if ($this->request->is('post')) {
 			$this->ServerAlias->create();
 			if ($this->ServerAlias->save($this->request->data)) {
-				$this->Session->setFlash(__('The server alias has been saved'));
-				$this->redirect(array('action' => 'index'));
+				$this->Session->setFlash(__('The server alias has been added'));
+				$this->redirect(array('controller' => 'applications', 'action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The server alias could not be saved. Please, try again.'));
 			}
+		} else {
+			$this->request->data['ServerAlias']['application_id'] = $applicationId;
 		}
-		$applications = $this->ServerAlias->Application->find('list');
-		$this->set(compact('applications'));
 	}
 
 /**

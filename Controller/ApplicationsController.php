@@ -45,15 +45,16 @@ class ApplicationsController extends AppsAppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Application->create();
-			if ($this->Application->saveAssociated($this->request->data)) {
+			if ($this->Application->saveAssociated($this->Application->cleanEmptyServerAliases($this->request->data))) {
+				$this->Application->init($this->Application->id);
 				$this->Session->setFlash(__('The application has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The application could not be saved. Please, try again.'));
 			}
-		} else {
+		}/* else {
 			$this->request->data['Application']['status'] = 1;
-		}
+		}*/
 		$documentRoots = $this->Application->DocumentRoot->find('list');
 		$this->set(compact('documentRoots'));
 	}

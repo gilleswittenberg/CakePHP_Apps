@@ -7,10 +7,12 @@
 		echo $this->Form->input('server_name');
 		echo $this->Form->input('Database.database', array('required' => false));
 		echo $this->Form->input('Database.login', array('required' => false));
+		//echo $this->Form->input('status', array('type' => 'hidden'));
 		//echo $this->Form->input('Database.password', array('required' => false));
 		//echo $this->Form->input('slug');
-		//echo $this->Form->input('status', array('type' => 'hidden'));
-		//echo $this->Form->input('Domain.0.domain');
+		for ($i = 0; $i < 3; $i++) {
+			echo $this->Form->input('ServerAlias.' . $i . '.domain', array('required' => false, 'label' => __('ServerAlias %d ', $i + 1)));
+		}
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

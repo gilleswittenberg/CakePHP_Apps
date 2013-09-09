@@ -38,14 +38,14 @@ class Database extends AppsAppModel {
 		if ($created) {
 			$data = array();
 			$applicationId = $this->field('application_id');
-			$application = $this->Application->find('first', array('conditions' => array('Application.id' => $applicationId)));
-			if ($application) {
-				if (empty($this->data['Database']['database'])) {
-					$this->saveField('database', $application['Application']['slug']);
-				}
-				if (empty($this->data['Database']['login'])) {
-					$this->saveField('login', $application['Application']['slug']);
-				}
+			if (empty($this->data['Database']['database'])) {
+				$data['database'] = 'application-' . $applicationId;
+			}
+			if (empty($this->data['Database']['login'])) {
+				$data['login'] = 'application-' . $applicationId;
+			}
+			if (!empty($data)) {
+				$this->save($data);
 			}
 		}
 	}
