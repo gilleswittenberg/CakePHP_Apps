@@ -108,7 +108,7 @@ class ApplicationTest extends CakeTestCase {
 		$file = new File(Configure::read('Apps.httpdRoot') . DS . 'sites-available' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain'));
 		$this->assertFalse($file->exists());
 	}
-	/*
+
 	public function testDisable() {
 		$application = $this->getMockForModel('Application', array('databaseCreate', 'writeConfig', 'restartApache'));
 		$application->create();
@@ -117,9 +117,8 @@ class ApplicationTest extends CakeTestCase {
 		$application->init($id);
 		$file = new File(Configure::read('Apps.httpdRoot') . DS . 'sites-available' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain'));
 		$this->assertTrue($file->exists());
-		$application->saveField('status', 0);
+		$application->saveField('status', '0');
 		$file = new File(Configure::read('Apps.httpdRoot') . DS . 'sites-available' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain'));
 		$this->assertFalse($file->exists());
 	}
-	*/
 }

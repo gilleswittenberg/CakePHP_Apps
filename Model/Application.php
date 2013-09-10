@@ -117,6 +117,10 @@ class Application extends AppsAppModel {
 				$data['server_name'] = $applicationId . '.' . Configure::read('Apps.domain');
 			}
 			$this->save($data);
+		} else {
+			if ((isset($this->data['Application']['status']) && (string)$this->data['Application']['status'] === '0')) {
+				$this->apacheDeleteDirective();
+			}
 		}
 	}
 
