@@ -33,14 +33,6 @@ class Application extends AppsAppModel {
 				'message' => 'ServerName already exists'
 			)
 		),
-		'slug' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
-			),
-			'unique' => array(
-				'rule' => 'isUnique'
-			)
-		),
 		'status' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
@@ -108,7 +100,7 @@ class Application extends AppsAppModel {
 		$absolutePath = $application['DocumentRoot']['absolute_path'];
 		$appDir = $application['DocumentRoot']['app_dir'];
 		$serverName = $application['Application']['server_name'];
-		$applicationId = $application['Application']['slug'];
+		$applicationId = 'application-' . $application['Application']['id'];
 		$databaseName = $application['Database']['database'];
 		$databaseLogin = $application['Database']['login'];
 		// create directive
@@ -129,12 +121,9 @@ class Application extends AppsAppModel {
 
 	public function afterSave($created) {
 		if ($created) {
-			$applicationId = 'application-' . $this->id;
-			$data = array('slug' => $applicationId);
 			if (empty($this->data['Application']['server_name'])) {
-				$data['server_name'] = $applicationId . '.' . Configure::read('Apps.domain');
+				$this->saveField('server_name', 'application-' . $this->id . '.' . Configure::read('Apps.domain'));
 			}
-			$this->save($data);
 		} else {
 			if ((isset($this->data['Application']['status']) && (string)$this->data['Application']['status'] === '0')) {
 				$this->apacheDeleteDirective();

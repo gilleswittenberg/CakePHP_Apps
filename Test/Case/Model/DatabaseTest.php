@@ -31,8 +31,8 @@ class DatabaseTest extends CakeTestCase {
 	public function testAfterSave() {
 		$this->Database->saveAssociated(array('Application' => array('document_root_id' => 1), 'Database' => array('id' => '')));
 		$database = $this->Database->find('first', array('conditions' => array('Database.id' => $this->Database->id)));
-		$this->assertEquals($database['Application']['slug'], $database['Database']['login']);
-		$this->assertEquals($database['Application']['slug'], $database['Database']['database']);
+		$this->assertEquals('application-' . $database['Application']['id'], $database['Database']['database']);
+		$this->assertEquals('application-' . $database['Application']['id'], $database['Database']['login']);
 	}
 
     public function testCreateDatabase() {

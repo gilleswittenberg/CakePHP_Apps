@@ -16,11 +16,6 @@
 			<?php echo h($application['Application']['server_name']); ?>
 			&nbsp;
 		</dd>
-		<dt><?php echo __('Slug'); ?></dt>
-		<dd>
-			<?php echo h($application['Application']['slug']); ?>
-			&nbsp;
-		</dd>
 		<dt><?php echo __('Status'); ?></dt>
 		<dd>
 			<?php echo h($application['Application']['status']); ?>

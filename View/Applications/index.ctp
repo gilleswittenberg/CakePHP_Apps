@@ -5,7 +5,6 @@
 			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('document_root_id', __('Absolute Path')); ?></th>
 			<th><?php echo $this->Paginator->sort('server_name'); ?></th>
-			<th><?php echo $this->Paginator->sort('slug'); ?></th>
 			<th><?php echo $this->Paginator->sort('status'); ?></th>
 			<th><?php echo $this->Paginator->sort('modified'); ?></th>
 			<th><?php echo $this->Paginator->sort('created'); ?></th>
@@ -16,7 +15,6 @@
 		<td><?php echo h($application['Application']['id']); ?>&nbsp;</td>
 		<td><?php echo h($application['DocumentRoot']['absolute_path']); ?>&nbsp;</td>
 		<td><?php echo h($application['Application']['server_name']); ?>&nbsp;</td>
-		<td><?php echo h($application['Application']['slug']); ?>&nbsp;</td>
 		<td><?php echo h($application['Application']['status']); ?>&nbsp;</td>
 		<td><?php echo h($application['Application']['modified']); ?>&nbsp;</td>
 		<td><?php echo h($application['Application']['created']); ?>&nbsp;</td>

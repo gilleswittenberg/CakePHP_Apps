@@ -42,7 +42,6 @@
 		<th><?php echo __('Id'); ?></th>
 		<th><?php echo __('Document Root Id'); ?></th>
 		<th><?php echo __('Server Name'); ?></th>
-		<th><?php echo __('Slug'); ?></th>
 		<th><?php echo __('Status'); ?></th>
 		<th><?php echo __('Modified'); ?></th>
 		<th><?php echo __('Created'); ?></th>
@@ -55,7 +54,6 @@
 			<td><?php echo $application['id']; ?></td>
 			<td><?php echo $application['document_root_id']; ?></td>
 			<td><?php echo $application['server_name']; ?></td>
-			<td><?php echo $application['slug']; ?></td>
 			<td><?php echo $application['status']; ?></td>
 			<td><?php echo $application['modified']; ?></td>
 			<td><?php echo $application['created']; ?></td>

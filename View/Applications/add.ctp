@@ -9,7 +9,6 @@
 		echo $this->Form->input('Database.login', array('required' => false));
 		//echo $this->Form->input('status', array('type' => 'hidden'));
 		//echo $this->Form->input('Database.password', array('required' => false));
-		//echo $this->Form->input('slug');
 		for ($i = 0; $i < 3; $i++) {
 			echo $this->Form->input('ServerAlias.' . $i . '.domain', array('required' => false, 'label' => __('ServerAlias %d ', $i + 1)));
 		}

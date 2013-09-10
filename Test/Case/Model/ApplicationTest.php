@@ -66,7 +66,6 @@ class ApplicationTest extends CakeTestCase {
 		$application->saveAssociated(array('Application' => array('document_root_id' => 1), 'Database' => array('id' => '')));
 		$data = $application->read();
 		$this->assertEqual('application-' . $data['Application']['id'] . '.' . $domain, $data['Application']['server_name']);
-		$this->assertEqual('application-' . $data['Application']['id'], $data['Application']['slug']);
 		$this->assertEqual('application-' . $data['Application']['id'], $data['Database']['database']);
 	}
 
