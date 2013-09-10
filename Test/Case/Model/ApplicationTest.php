@@ -47,6 +47,18 @@ class ApplicationTest extends CakeTestCase {
 		$this->assertFalse(array_key_exists('ServerAlias', $cleanData));
 	}
 
+	public function testValidateServerName() {
+		$data = array('server_name' => 'example.com');
+		$this->Application->set($data);
+		$this->assertTrue($this->Application->validates());
+		$data = array('server_name' => 'subdomain.example.com');
+		$this->Application->set($data);
+		$this->assertTrue($this->Application->validates());
+		$data = array('server_name' => 'http://example.com');
+		$this->Application->set($data);
+		$this->assertFalse($this->Application->validates());
+	}
+
 	public function testAfterSave() {
 		$domain = Configure::read('Apps.domain');
 		$application = $this->getMockForModel('Apps.Application', array('apacheWriteDirective', 'databaseCreate', 'writeConfig', 'enableConfig', 'restartApache'));

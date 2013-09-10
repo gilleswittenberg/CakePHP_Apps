@@ -23,6 +23,16 @@ class Application extends AppsAppModel {
 				'rule' => array('numeric'),
 			),
 		),
+		'server_name' => array(
+			'domain' => array(
+				'rule' => array('validDomain'),
+				'message' => 'Supply a valid ServerName'
+			),
+			'unique' => array(
+				'rule' => array('isUnique'),
+				'message' => 'ServerName already exists'
+			)
+		),
 		'slug' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
@@ -83,6 +93,14 @@ class Application extends AppsAppModel {
 			unset($data['ServerAlias']);
 		}
 		return $data;
+	}
+
+	// http://stackoverflow.com/questions/1755144/how-to-validate-domain-name-in-php/4694816#4694816
+	public function validDomain($check) {
+		$domain = $check['server_name'];
+		return (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $domain) //valid chars check
+			&& preg_match("/^.{1,253}$/", $domain) //overall length check
+			&& preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $domain)   ); //length of each label
 	}
 
 	public function init($id) {
