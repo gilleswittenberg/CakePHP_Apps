@@ -16,10 +16,17 @@ class DocumentRoot extends AppsAppModel {
  */
 	public $validate = array(
 		'absolute_path' => array(
-			'notempty' => array(
-				'rule' => array('notempty'),
+			'absolutePath' => array(
+				'rule' => '#^/[a-zA-Z0-9/_\-\.]+$#',
+				'message' => 'Supply an absolute path'
 			),
 		),
+		'app_dir' => array(
+			'app_dir' => array(
+				'rule' => '#^[a-zA-Z0-9_\-\.]+$#',
+				'message' => 'No valid dirname'
+			)
+		)
 	);
 
 /**
@@ -32,6 +39,16 @@ class DocumentRoot extends AppsAppModel {
 			'className' => 'Apps.Application',
 		)
 	);
+
+	public function beforeValidate() {
+		if (!empty($this->data['DocumentRoot']['absolute_path'])) {
+			$this->data['DocumentRoot']['absolute_path'] = rtrim($this->data['DocumentRoot']['absolute_path'], '/');
+		}
+		if (!empty($this->data['DocumentRoot']['app_dir'])) {
+			$this->data['DocumentRoot']['app_dir'] = trim($this->data['DocumentRoot']['app_dir'], '/');
+		}
+		return true;
+	}
 
 	public function beforeDelete($cascade = true) {
 		$documentRoot = $this->find('first', array('conditions' => array('id' => $this->id)));

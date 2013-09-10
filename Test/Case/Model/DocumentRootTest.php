@@ -39,6 +39,35 @@ class DocumentRootTest extends CakeTestCase {
 		parent::tearDown();
 	}
 
+	public function testValidateAbsolutePath() {
+		$data = array('absolute_path' => 'relative/path');
+		$this->DocumentRoot->set($data);
+		$this->assertFalse($this->DocumentRoot->validates());
+		$data = array('absolute_path' => '/absolute/path');
+		$this->DocumentRoot->set($data);
+		$this->assertTrue($this->DocumentRoot->validates());
+	}
+
+	public function testValidateAppDir() {
+		$data = array('app_dir' => 'dir with spaces');
+		$this->DocumentRoot->set($data);
+		$this->assertFalse($this->DocumentRoot->validates());
+	}
+
+	public function testBeforeSaveAbsolutePath() {
+		$data = array('absolute_path' => '/absolute/path/');
+		$this->DocumentRoot->create();
+		$this->DocumentRoot->save($data);
+		$this->assertEquals($this->DocumentRoot->field('absolute_path'), '/absolute/path');
+	}
+
+	public function testBeforeValidateAppDir() {
+		$data = array('app_dir' => '/app/');
+		$this->DocumentRoot->create();
+		$this->DocumentRoot->save($data);
+		$this->assertEquals($this->DocumentRoot->field('app_dir'), 'app');
+	}
+
 	public function testDelete() {
 		$this->DocumentRoot->id = 1;
 		$this->assertFalse($this->DocumentRoot->delete());
