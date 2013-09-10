@@ -5,6 +5,15 @@ endif;
 App::uses('Debugger', 'Utility');
 ?>
 <h2><?php echo __('Check Config for CakePHP Apps Plugin'); ?></h2>
+
+<p>
+	<?php
+		echo '<span class="notice success">';
+			echo __d('cake_dev', 'Apache is being run by user %s.', exec('whoami'));
+		echo '</span>';
+	?>
+</p>
+
 <p>
 	<?php
 		if (ConnectionManager::getDataSource(Configure::read('Apps.dbConfig'))):
@@ -18,6 +27,7 @@ App::uses('Debugger', 'Utility');
 		endif;
 	?>
 </p>
+
 <p>
 	<?php
 		if (is_writable(Configure::read('Apps.httpdRoot') . DS . 'sites-available')):
@@ -31,6 +41,7 @@ App::uses('Debugger', 'Utility');
 		endif;
 	?>
 </p>
+
 <p>
 	<?php
 		if (file_exists(Configure::read('Apps.sqlDir') . DS . Configure::read('Apps.schemaFile'))):
