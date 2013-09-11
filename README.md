@@ -1,11 +1,12 @@
 # CakePHP Apps plugin
-CakePHP plugin to manage multiple apps / domains running on same APP and CORE codebase.
+CakePHP plugin to manage multiple applications, domains and databases running on same APP and CORE codebase.
 
 ## Requirements
 - This Plugin is written for Debian/Linux running Apache2 and MySQL
 
 ## Installation
-- Install using Composer
+- Install using Composer (https://packagist.org/packages/gilleswittenberg/apps)
+	- add ```require: {"gilleswittenberg/apps": "dev-master"}```
 - Install copying or cloning to Plugin/Apps
 
 ## Setup Debian
@@ -54,9 +55,8 @@ public function __construct () {
 
 ## ToDo
 - files and webroot folders per application
-- specific Apache redirects per application (redirect http://example.com/favicon to different files)
+- specific Apache redirects per application (redirect http://application-{id}.example.com/favicon to different files)
 - Give Application.status titles instead of integers
-- Composer + Packagist
 - Travis CI (http://mark-story.com/posts/view/testing-cakephp-plugins-with-travis-ci)
 - Slim down privileges of database Apps user
 - Improve README
