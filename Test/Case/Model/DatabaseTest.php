@@ -60,30 +60,6 @@ class DatabaseTest extends CakeTestCase {
 		$this->assertEmpty($this->Database->query("SHOW DATABASES LIKE 'application-123'"));
     }
 
-	/*
-	public function testCreateTables() {
-		$this->Database->createDatabase('application-123');
-		$this->Database->createTables('application-123');
-		$this->assertNotEmpty($this->Database->query('SHOW TABLES FROM `application-123`'));
-		// clean up
-		$this->Database->query('DROP DATABASE IF EXISTS `application-123`');
-	}
-
-	public function testInitTables() {
-		$dataSource = ConnectionManager::getDataSource(Configure::read('Apps.dbConfig'));
-		$database = $dataSource->config['database'];
-		$this->Database->createDatabase('application-123');
-		$this->Database->createTables('application-123');
-		$this->Database->initTables('application-123');
-		$this->Database->query('USE `application-123`', false);
-		$result = $this->Database->query('SELECT COUNT(*) FROM users', false);
-		$this->assertGreaterThan(0, $result[0][0]['COUNT(*)']);
-		// clean up
-		$this->Database->query('DROP DATABASE IF EXISTS `application-123`');
-		$this->Database->query("USE `$database`;");
-	}
-	*/
-
 	public function testCreateUser() {
 		$this->assertEmpty($this->Database->query("SELECT User FROM mysql.user WHERE User='user_name'", false));
 		$this->Database->createUser('user_name');

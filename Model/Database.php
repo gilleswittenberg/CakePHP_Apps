@@ -74,33 +74,6 @@ class Database extends AppsAppModel {
 		exec(APP . $cakePath . ' -app ' . $absolutePath . DS . $appDir . ' schema create --yes');
 		exec(APP . $cakePath . ' -app ' . APP . ' apps.run updateschemacurrent ' . $absolutePath . ' ' . $appDir);
 	}
-	/*
-	public function createTables($name, $absolutePath = APP) {
-		$dbConfig = Configure::read('Apps.dbConfig') ?: 'default';
-		$dataSource = ConnectionManager::getDataSource($dbConfig);
-		$database = $dataSource->config['database'];
-		$file = new File($absolutePath . DS . Configure::read('Apps.sqlDir') . DS . Configure::read('Apps.schemaFile'));
-		if ($file->exists()) {
-			$sql = "USE `$name`;";
-			$sql .= $file->read();
-			$sql .= "USE `$database`;";
-			$this->query($sql, false);
-		}
-	}
-
-	public function initTables($name, $absolutePath = APP) {
-		$dbConfig = Configure::read('Apps.dbConfig') ?: 'default';
-		$dataSource = ConnectionManager::getDataSource($dbConfig);
-		$database = $dataSource->config['database'];
-		$file = new File($absolutePath . DS . Configure::read('Apps.sqlDir') . DS . Configure::read('Apps.tablesFile'));
-		if ($file->exists()) {
-			$sql = "USE `$name`;";
-			$sql .= $file->read();
-			$sql .= "USE `$database`;";
-			$this->query($sql, false);
-		}
-	}
-	*/
 
 	public function createUser($user) {
 		$user = Sanitize::escape($user);
