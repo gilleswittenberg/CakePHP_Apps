@@ -70,6 +70,7 @@ class DocumentRootTest extends CakeTestCase {
 
 	public function testDelete() {
 		$this->DocumentRoot->id = 1;
+		// false cause DocumentRoot.1 has applications
 		$this->assertFalse($this->DocumentRoot->delete());
 	}
 }

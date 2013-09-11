@@ -28,6 +28,17 @@ class DatabaseTest extends CakeTestCase {
 		$this->Database = ClassRegistry::init('Apps.Database');
 	}
 
+/**
+ * tearDown method
+ *
+ * @return void
+ */
+	public function tearDown() {
+		unset($this->Database);
+
+		parent::tearDown();
+	}
+
 	public function testAfterSave() {
 		$this->Database->saveAssociated(array('Application' => array('document_root_id' => 1), 'Database' => array('id' => '')));
 		$database = $this->Database->find('first', array('conditions' => array('Database.id' => $this->Database->id)));
@@ -106,18 +117,6 @@ class DatabaseTest extends CakeTestCase {
 		$this->assertTrue($this->Database->databaseExists('application-123'));
 		// clean up
 		$this->Database->query('DROP DATABASE IF EXISTS `application-123`');
-	}
-
-
-/**
- * tearDown method
- *
- * @return void
- */
-	public function tearDown() {
-		unset($this->Database);
-
-		parent::tearDown();
 	}
 
 }
