@@ -1,0 +1,12 @@
+{
+	"name": "gilleswittenberg/apps",
+	"type": "cakephp-plugin",
+	"description": "CakePHP Apps Plugin",
+	"version": "0.0.1",
+	"homepage": "https://github.com/gilleswittenberg/CakePHP_Apps",
+	"license": "MIT",
+	"require": {
+		"php": ">=5.3.0",
+		"composer/installers": "*"
+	}
+}
