@@ -1,6 +1,7 @@
 <?php
 App::uses('AppsAppModel', 'Apps.Model');
 App::uses('Sanitize', 'Utility');
+App::uses('MySQLLib', 'Apps.Lib');
 /**
  * Database Model
  *
@@ -33,6 +34,12 @@ class Database extends AppsAppModel {
 	);
 
 	public $password;
+	protected $MySQLLib;
+
+	public function __construct($id = false, $table = null, $ds = null) {
+		parent::__construct($id, $table, $ds);
+		$this->MySQLLib = new MySQLLib();
+	}
 
 	public function afterSave($created) {
 		if ($created) {
@@ -57,15 +64,11 @@ class Database extends AppsAppModel {
 	}
 
 	public function createDatabase($name) {
-		$name = Sanitize::escape($name);
-		$sql = "CREATE DATABASE IF NOT EXISTS `$name`";
-		return $this->query($sql, false);
+		return $this->MySQLLib->createDatabase($name);
 	}
 
 	public function dropDatabase($name) {
-		$name = Sanitize::escape($name);
-		$sql = "DROP DATABASE IF EXISTS `$name`";
-		return $this->query($sql, false);
+		return $this->MySQLLib->dropDatabase($name);
 	}
 
 	public function createSchema($serverName, $absolutePath = APP, $appDir = '') {
@@ -76,27 +79,20 @@ class Database extends AppsAppModel {
 	}
 
 	public function createUser($user) {
-		$user = Sanitize::escape($user);
 		$password = $this->getPassword();
-		$sql = "CREATE USER '$user'@'localhost' IDENTIFIED BY '$password'";
-		$this->query($sql, false);
-		return $password;
+		return $this->MySQLLib->createUser($user, $password);
 	}
 
 	public function dropUser($user) {
-		$user = Sanitize::escape($user);
-		$sql = "DROP USER '$user'@'localhost'";
-		$this->query($sql, false);
+		return $this->MySQLLib->dropUser($user);
 	}
 
 	public function grantPrivileges($database, $user) {
-		$sql = "GRANT ALL PRIVILEGES ON `$database` . * TO '$user'@'localhost'";
-		$this->query($sql, false);
+		return $this->MySQLLib->grantPrivileges($database, $user);
 	}
 
 	public function flushPrivileges() {
-		$sql = 'FLUSH PRIVILEGES';
-		$this->query($sql, false);
+		return $this->MySQLLib->flushPrivileges();
 	}
 
 	public function dump($database, $filename = null) {
@@ -106,16 +102,11 @@ class Database extends AppsAppModel {
 		if (!$filename) {
 			$filename = $database . '_' . date('m-d-Y-His') . '.sql';
 		}
-		$dirname = Configure::read('Apps.dumpDir') ?: APP . 'files';
-		$dataSource = ConnectionManager::getDataSource(Configure::read('Apps.dbConfig'));
-		$user = $dataSource->config['login'];
-		$password = $dataSource->config['password'];
-		exec('mysqldump -u' . $user . ' -p' . $password . ' ' . $database . ' > ' . $dirname . DS . $filename);
+		$this->MySQLLib->dump($database, $filename);
 	}
 
 	public function databaseExists($database) {
-		$result = $this->query("SHOW DATABASES LIKE '$database'");
-		return !empty($result);
+		return $this->MySQLLib->databaseExists($database);
 	}
 
 	protected function getPassword($length = 12) {
