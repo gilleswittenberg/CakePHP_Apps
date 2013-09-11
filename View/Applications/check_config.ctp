@@ -16,6 +16,21 @@ App::uses('Debugger', 'Utility');
 
 <p>
 	<?php
+		$output = (int)exec('sudo -n uptime 2>&1|grep "load"|wc -l');
+		if ($output) {
+			echo '<span class="notice success">';
+				echo __d('cake_dev', 'Apache user is sudoer.');
+			echo '</span>';
+		} else {
+			echo '<span class="notice">';
+				echo __d('cake_dev', 'Apache user is no sudoer.');
+			echo '</span>';
+		}
+	?>
+</p>
+
+<p>
+	<?php
 		if (ConnectionManager::getDataSource(Configure::read('Apps.dbConfig'))):
 			echo '<span class="notice success">';
 				echo __d('cake_dev', 'Database Config %s is present.', Configure::read('Apps.dbConfig'));
@@ -27,6 +42,7 @@ App::uses('Debugger', 'Utility');
 		endif;
 	?>
 </p>
+<?php //@ToDo check if database user is privileged to create, delete and grant ?>
 
 <p>
 	<?php
@@ -42,40 +58,6 @@ App::uses('Debugger', 'Utility');
 	?>
 </p>
 
-<p>
-	<?php
-		if (file_exists(Configure::read('Apps.sqlDir') . DS . Configure::read('Apps.schemaFile'))):
-			echo '<span class="notice success">';
-				echo __d('cake_dev', 'Schema file is present.');
-			echo '</span>';
-		else:
-			echo '<span class="notice">';
-				echo __d('cake_dev', 'Schema file is not present.');
-			echo '</span>';
-		endif;
-	?>
-</p>
-
-<?php
-foreach ($documentRoots as $documentRoot) {
-	$dir = $documentRoot['DocumentRoot']['absolute_path'] . DS . Configure::read('Apps.configDir');
-	if (is_dir($dir)):
-		if (is_writable($dir)):
-			echo '<span class="notice success">';
-				echo $dir . __d('cake_dev', ' is writable.');
-			echo '</span>';
-		else:
-			echo '<span class="notice">';
-				echo $dir . __d('cake_dev', ' is not writable.');
-			echo '</span>';
-		endif;
-	else:
-		echo '<span class="notice">';
-			echo $dir . __d('cake_dev', ' is not a dir.');
-		echo '</span>';
-	endif;
-}
-?>
 <p>
 	<?php
 		if (is_dir(Configure::read('Apps.dumpDir'))):
@@ -99,6 +81,56 @@ foreach ($documentRoots as $documentRoot) {
 	?>
 </p>
 
+<p>
+	<?php
+		if (file_exists(Configure::read('Apps.sqlDir') . DS . Configure::read('Apps.schemaFile'))):
+			echo '<span class="notice success">';
+				echo __d('cake_dev', 'Schema file is present.');
+			echo '</span>';
+		else:
+			echo '<span class="notice">';
+				echo __d('cake_dev', 'Schema file is not present.');
+			echo '</span>';
+		endif;
+	?>
+</p>
+
+<h2><?php echo __('Document Roots'); ?></h2>
+<?php
+foreach ($documentRoots as $documentRoot): ?>
+	<h3><?php echo $documentRoot['DocumentRoot']['absolute_path']; ?></h3>
+	<?php
+	// configDir
+	$dir = $documentRoot['DocumentRoot']['absolute_path'] . DS . Configure::read('Apps.configDir');
+	if (is_dir($dir)):
+		if (is_writable($dir)):
+			echo '<span class="notice success">';
+				echo $dir . __d('cake_dev', ' is writable.');
+			echo '</span>';
+		else:
+			echo '<span class="notice">';
+				echo $dir . __d('cake_dev', ' is not writable.');
+			echo '</span>';
+		endif;
+	else:
+		echo '<span class="notice">';
+			echo $dir . __d('cake_dev', ' is not a dir.');
+		echo '</span>';
+	endif;
+
+	// schema.php
+	$schemaFile = $documentRoot['DocumentRoot']['absolute_path'] . DS . $documentRoot['DocumentRoot']['app_dir'] . DS . 'Config' . DS . 'Schema' . DS . Configure::read('Apps.schemaFile');
+	if (is_file($schemaFile)):
+		echo '<span class="notice success">';
+			echo __d('cake_dev', '%s is present.', $schemaFile);
+		echo '</span>';
+	else:
+		echo '<span class="notice">';
+			echo __d('cake_dev', '%s is not present.', $schemaFile);
+		echo '</span>';
+	endif;
+endforeach;
+?>
+
 <!--
-check if database user is granted for needed actions
 -->
