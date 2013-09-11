@@ -94,7 +94,7 @@ class Database extends AppsAppModel {
 		$this->query($sql, false);
 	}
 
-	public function flushPrivilges() {
+	public function flushPrivileges() {
 		$sql = 'FLUSH PRIVILEGES';
 		$this->query($sql, false);
 	}
