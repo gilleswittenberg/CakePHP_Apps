@@ -2,11 +2,11 @@
 class CurrentShell extends AppShell {
 
 	public function main() {
-		// print current application
 		if (empty($this->args[0])) {
 			$this->error('Supply document_root');
 		}
 		$documentRoot = $this->args[0];
+		// print current application
 		if (empty($this->args[1])) {
 			$file = new File($documentRoot . DS . Configure::read('Apps.configDir') . DS . 'current_application');
 			if ($file->exists()) {
@@ -16,7 +16,7 @@ class CurrentShell extends AppShell {
 				$this->err('current_application does not exist');
 			}
 		}
-		// set current application
+		// link current application
 		else {
 			$file = new File($documentRoot . DS . Configure::read('Apps.configDir') . DS . $this->args[1] . '.php');
 			if ($file->exists()) {
