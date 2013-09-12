@@ -23,8 +23,8 @@ CakePHP plugin to manage multiple applications, domains and databases running on
 - Set database config for database Apps in Config/database.php
 - Run ```cake schema create -p Apps```
 - Grant the user of database Apps the following privileges: create, drop, create user, grant user, new databases
+- Create dumpDir ({TMP} by default) and make sure it is writable by user running Apache (www-data)
 - Add all your document_roots at /apps/document_roots/
-- Open /apps/applications/check_config in your browser and check for warnings
 - create dir {APP}/Config/applcations for all your document_roots
 - Append the following code to all document_root/{APP}/Config/bootstrap.php files
 
@@ -51,13 +51,14 @@ public function __construct () {
 ```
 
 - Create your base schema.php and snapshots for each document_root and make sure the classname is AppSchema
+- Open /apps/applications/check_config in your browser and check for warnings
 - Create some apps at /apps/applications/add to see if everything is working fine
 
 ## ToDo
 - files and webroot folders per application
 - specific Apache redirects per application (redirect http://application-{id}.example.com/favicon to different files)
 - Give Application.status titles instead of integers
-- Travis CI (http://mark-story.com/posts/view/testing-cakephp-plugins-with-travis-ci)
+- Split tests into Unit/Integration tests. And set up Travis CI (http://mark-story.com/posts/view/testing-cakephp-plugins-with-travis-ci)
 - Slim down privileges of database Apps user
 - Improve README
 - Add more tests
