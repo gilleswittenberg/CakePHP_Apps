@@ -37,6 +37,21 @@ class ApplicationFixture extends CakeTestFixture {
 			'modified' => '2013-06-13 15:26:15',
 			'created' => '2013-06-13 15:26:15'
 		),
+		array(
+			'id' => 2,
+			'document_root_id' => 1,
+			'server_name' => 'application-2.example.com',
+			'status' => '1',
+			'modified' => '2013-06-13 15:26:15',
+			'created' => '2013-06-13 15:26:15'
+		),
+		array(
+			'id' => 3,
+			'document_root_id' => 1,
+			'server_name' => 'application-3.example.com',
+			'status' => '0',
+			'modified' => '2013-06-13 15:26:15',
+			'created' => '2013-06-13 15:26:15'
+		),
 	);
-
 }

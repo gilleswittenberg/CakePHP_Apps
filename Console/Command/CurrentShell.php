@@ -4,7 +4,7 @@ class CurrentShell extends AppShell {
 
 	public function main() {
 		if (empty($this->args[0])) {
-			return $this->err('Supply document_root');
+			return $this->error('Supply document_root');
 		}
 		$documentRoot = $this->args[0];
 		// print current application
@@ -14,7 +14,7 @@ class CurrentShell extends AppShell {
 				echo $this->exec('readlink ' . $fileName);
 				return;
 			} else {
-				return $this->err('current_application does not exist');
+				return $this->error('current_application does not exist');
 			}
 		}
 		// link current application
@@ -24,7 +24,7 @@ class CurrentShell extends AppShell {
 				$this->exec('ln -fs ' . $fileName . ' ' . $documentRoot . DS . Configure::read('Apps.configDir') . DS . 'current_application');
 				return;
 			} else {
-				return $this->err('Not an application');
+				return $this->error('Not an application');
 			}
 		}
 	}

@@ -55,20 +55,20 @@ class CurrentShellTest extends CakeTestCase {
 
 	public function testEmptyArgs() {
 		$this->Shell->expects($this->once())
-			->method('err');
+			->method('error');
 		$this->Shell->main();
 	}
 
 	public function testNonExistingDocumentRoot() {
 		$this->Shell->expects($this->once())
-			->method('err');
+			->method('error');
 		$this->Shell->args = array('test');
 		$this->Shell->main();
 	}
 
 	public function testExistingDocumentRoot() {
 		$this->Shell->expects($this->never())
-			->method('err');
+			->method('error');
 		$this->Shell->expects($this->once())
 			->method('fileExists')
 			->will($this->returnValue(true));
@@ -78,7 +78,7 @@ class CurrentShellTest extends CakeTestCase {
 
 	public function testLinking() {
 		$this->Shell->expects($this->never())
-			->method('err');
+			->method('error');
 		$this->Shell->expects($this->once())
 			->method('fileExists')
 			->will($this->returnValue(true));
