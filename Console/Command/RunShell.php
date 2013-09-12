@@ -1,4 +1,5 @@
 <?php
+App::uses('AppShell', 'Console/Command');
 App::uses('Folder', 'Utility');
 class RunShell extends AppShell {
 
@@ -6,7 +7,13 @@ class RunShell extends AppShell {
 
     public function main() {
 		$target = $this->getTarget();
+		if (!$target) {
+			return false;
+		}
 		$command = $this->getCommand();
+		if (!$command) {
+			return false;
+		}
 		$applications = $this->getApplications($target);
 		foreach ($applications as $application) {
 			$this->setCurrent($application['Application']['server_name'], $application['DocumentRoot']['absolute_path']);
@@ -16,6 +23,9 @@ class RunShell extends AppShell {
 
 	public function dump() {
 		$target = $this->getTarget();
+		if (!$target) {
+			return false;
+		}
 		$applications = $this->getApplications($target);
 		foreach ($applications as $application) {
 			$this->setCurrent($application['Application']['server_name'], $application['DocumentRoot']['absolute_path']);
@@ -28,15 +38,18 @@ class RunShell extends AppShell {
 		$target = $this->getTarget();
 		if ($target === 'all') {
 			$this->error('Cannot run updateSchema for all');
+			return false;
 		}
 		$applications = $this->getApplications($target);
 		if (empty($applications)) {
 			$this->error('No applications');
+			return false;
 		}
 		$appDir = $this->getAppDir($target);
 		$snapshot = $this->getLatestSchemaSnapshot($target . DS . $appDir);
 		if (!$snapshot) {
 			$this->error('No snapshot');
+			return false;
 		}
 		$command = 'schema update --snapshot ' . $snapshot . ' --yes';
  		// run schema shell
@@ -44,7 +57,7 @@ class RunShell extends AppShell {
 			$absolutePath = $application['DocumentRoot']['absolute_path'];
 			$this->setCurrent($application['Application']['server_name'], $absolutePath);
 			$appPath = empty($appDir) ? $absolutePath : $absolutePath . DS . $appDir;
-			exec(APP . Configure::read('Apps.cakePath') . ' -app ' . $appPath . ' ' . $command);
+			$this->exec(APP . Configure::read('Apps.cakePath') . ' -app ' . $appPath . ' ' . $command);
 		}
 	}
 
@@ -57,7 +70,7 @@ class RunShell extends AppShell {
 		}
 		$command = 'schema -app ' . $appPath . ' update --snapshot ' . $snapshot . ' --yes';
 		$cakePath = Configure::read('Apps.cakePath');
-		exec(APP . $cakePath . ' ' . $command);
+		$this->exec(APP . $cakePath . ' ' . $command);
 	}
 
 	protected function getLatestSchemaSnapshot($appPath) {
@@ -75,17 +88,18 @@ class RunShell extends AppShell {
 
 	protected function setCurrent($application, $absolutePath) {
 		$cakePath = Configure::read('Apps.cakePath') ?: 'Console' . DS . 'cake';
-		exec(APP . $cakePath . ' Apps.current ' . $absolutePath . ' ' . $application);
+		$this->exec(APP . $cakePath . ' Apps.current ' . $absolutePath . ' ' . $application);
 	}
 
 	protected function run($appDir, $command) {
 		$cakePath = Configure::read('Apps.cakePath') ?: 'Console' . DS . 'cake';
-		exec($appDir . DS . $cakePath . ' ' . $command);
+		$this->exec($appDir . DS . $cakePath . ' ' . $command);
 	}
 
 	protected function getTarget() {
 		if (empty($this->args)) {
 			$this->error('No target');
+			return false;
 		}
 		$arg0 = $this->args[0];
 		if ($arg0 === 'all') {
@@ -94,6 +108,7 @@ class RunShell extends AppShell {
 			return $arg0;
 		}
 		$this->error('Invalid target: ' . $arg0);
+		return false;
 	}
 
 	protected function getApplications($target) {
@@ -112,8 +127,13 @@ class RunShell extends AppShell {
 	protected function getCommand() {
 		if (count($this->args) < 2) {
 			$this->error('No command');
+			return false;
 		} else {
 			return $this->args[1];
 		}
+	}
+
+	protected function exec($command) {
+		exec($command);
 	}
 }
