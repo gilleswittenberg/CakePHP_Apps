@@ -69,7 +69,7 @@ class CreateApplicationShellTest extends CakeTestCase {
 	public function testExistingDocumentRoot() {
 		$this->Shell->expects($this->never())
 			->method('error');
-		$this->Shell->args = array(APP);
+		$this->Shell->args = array(ROOT);
 		$this->Shell->main();
 	}
 }

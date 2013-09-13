@@ -62,7 +62,7 @@ class RunShellTest extends CakeTestCase {
 	public function testMainEmptyArgs1() {
 		$this->Shell->expects($this->once())
 			->method('error');
-		$this->Shell->args = array(APP);
+		$this->Shell->args = array(ROOT);
 		$this->Shell->main();
 	}
 
@@ -76,7 +76,7 @@ class RunShellTest extends CakeTestCase {
 			->method('setCurrent');
 		$this->Shell->expects($this->atLeastOnce())
 			->method('run');
-		$this->Shell->args = array(APP, 'ls');
+		$this->Shell->args = array(ROOT, 'ls');
 		$this->Shell->main();
 	}
 
@@ -91,7 +91,7 @@ class RunShellTest extends CakeTestCase {
 		$this->Shell->Database = $this->getMock('Database');
 		$this->Shell->Database->expects($this->atLeastOnce())
 			->method('dump');
-		$this->Shell->args = array(APP, 'ls');
+		$this->Shell->args = array(ROOT, 'ls');
 		$this->Shell->dump();
 	}
 
@@ -108,7 +108,7 @@ class RunShellTest extends CakeTestCase {
 			->method('setCurrent');
 		$this->Shell->expects($this->atLeastOnce())
 			->method('exec');
-		$this->Shell->args = array(APP);
+		$this->Shell->args = array(ROOT);
 		$this->Shell->updateSchema();
 	}
 
@@ -123,7 +123,7 @@ class RunShellTest extends CakeTestCase {
 			->will($this->returnValue(1));
 		$this->Shell->expects($this->atLeastOnce())
 			->method('exec');
-		$this->Shell->args = array(APP);
+		$this->Shell->args = array(ROOT);
 		$this->Shell->updateSchemaCurrent();
 	}
 }

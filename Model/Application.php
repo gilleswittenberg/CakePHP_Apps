@@ -108,10 +108,10 @@ class Application extends AppsAppModel {
 		// create database
 		$password = $this->databaseCreate($databaseName, $databaseLogin, $absolutePath);
 		// write CakePHP config
-		$this->writeConfig($absolutePath, $serverName, $applicationId, $applicationId, $password);
+		$this->writeConfig($absolutePath . DS . $appDir, $serverName, $applicationId, $applicationId, $password);
 		// link config for ServerAliases
 		foreach ($application['ServerAlias'] as $serverAlias) {
-			$this->linkConfig($absolutePath, $serverName, $serverAlias['domain']);
+			$this->linkConfig($absolutePath . DS . $appDir, $serverName, $serverAlias['domain']);
 		}
 		// init tables and rows
 		$this->Database->createSchema($serverName, $absolutePath, $appDir);
@@ -140,7 +140,7 @@ class Application extends AppsAppModel {
 		$this->Database->dump($this->deletedRow['Database']['database']);
 		$this->Database->dropDatabase($this->deletedRow['Database']['database']);
 		$this->Database->dropUser($this->deletedRow['Database']['login']);
-		$this->deleteConfig($this->deletedRow['DocumentRoot']['absolute_path'], $this->deletedRow['Application']['server_name']);
+		$this->deleteConfig($this->deletedRow['DocumentRoot']['absolute_path'] . DS . $this->deletedRow['DocumentRoot']['app_dir'], $this->deletedRow['Application']['server_name']);
 		$apacheLib = new ApacheLib();
 		$apacheLib->disableDirective($this->deletedRow['Application']['server_name']);
 		$apacheLib->deleteDirective($this->deletedRow['Application']['server_name']);

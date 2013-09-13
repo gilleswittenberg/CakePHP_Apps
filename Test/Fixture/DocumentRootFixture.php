@@ -31,7 +31,7 @@ class DocumentRootFixture extends CakeTestFixture {
 	public $records = array(
 		array(
 			'id' => 1,
-			'absolute_path' => APP,
+			'absolute_path' => ROOT,
 			'app_dir' => APP_DIR,
 			'modified' => '2013-06-13 15:53:57',
 			'created' => '2013-06-13 15:53:57'

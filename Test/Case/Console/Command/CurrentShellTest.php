@@ -71,8 +71,9 @@ class CurrentShellTest extends CakeTestCase {
 			->method('error');
 		$this->Shell->expects($this->once())
 			->method('fileExists')
+			->with(APP . Configure::read('Apps.configDir') . DS . 'current_application')
 			->will($this->returnValue(true));
-		$this->Shell->args = array(APP);
+		$this->Shell->args = array(ROOT);
 		$this->Shell->main();
 	}
 
@@ -81,10 +82,11 @@ class CurrentShellTest extends CakeTestCase {
 			->method('error');
 		$this->Shell->expects($this->once())
 			->method('fileExists')
+			->with(APP . Configure::read('Apps.configDir') . DS . 'application-9.example.com.php')
 			->will($this->returnValue(true));
 		$this->Shell->expects($this->once())
 			->method('exec');
-		$this->Shell->args = array(APP, 'application-9.example.com');
+		$this->Shell->args = array(ROOT, 'application-9.example.com');
 		$this->Shell->main();
 	}
 }

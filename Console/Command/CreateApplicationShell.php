@@ -10,7 +10,7 @@ class CreateApplicationShell extends AppShell {
 			return false;
 		}
 		$documentRoot = $this->DocumentRoot->find('first', array('conditions' => array('absolute_path' => $this->args[0])));
-		if (!$documentRoot) {
+		if (empty($documentRoot)) {
 			$this->error('No valid DocumentRoot');
 			return false;
 		}

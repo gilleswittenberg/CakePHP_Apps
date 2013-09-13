@@ -101,7 +101,7 @@ foreach ($documentRoots as $documentRoot): ?>
 	<h3><?php echo $documentRoot['DocumentRoot']['absolute_path']; ?></h3>
 	<?php
 	// configDir
-	$dir = $documentRoot['DocumentRoot']['absolute_path'] . DS . Configure::read('Apps.configDir');
+	$dir = $documentRoot['DocumentRoot']['absolute_path'] . DS . $documentRoot['DocumentRoot']['app_dir'] . DS . Configure::read('Apps.configDir');
 	if (is_dir($dir)):
 		if (is_writable($dir)):
 			echo '<span class="notice success">';
