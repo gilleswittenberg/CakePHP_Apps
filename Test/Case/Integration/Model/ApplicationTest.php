@@ -38,7 +38,8 @@ class IntegrationApplicationTest extends CakeTestCase {
 		parent::tearDown();
 	}
 
-	public function testAfterDelete() {
+	public function testCreateAndDelete() {
+		// create
 		$this->Application->create();
 		$this->Application->saveAssociated(array('Application' => array('document_root_id' => 1), 'Database' => array('id' => '')));
 		$id = $this->Application->id;
@@ -49,6 +50,8 @@ class IntegrationApplicationTest extends CakeTestCase {
 		$this->assertTrue($file->exists());
 		$file = new File(Configure::read('Apps.httpdRoot') . DS . 'sites-available' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain'));
 		$this->assertTrue($file->exists());
+
+		// delete
 		$this->Application->delete();
 		$this->assertEmpty($this->Application->query("SHOW DATABASES LIKE 'application-$id'", false));
 		$this->assertEmpty($this->Application->query("SELECT USER FROM mysql.user WHERE User='application-$id'", false));

@@ -80,9 +80,16 @@ class ApplicationTest extends CakeTestCase {
 	public function testInit() {
 		$domain = Configure::read('Apps.domain');
 		$application = $this->getMockForModel('Apps.Application', array('apacheWriteDirective', 'databaseCreate', 'writeConfig', 'enableConfig', 'restartApache'));
+		$application->Database = $this->getMockForModel('Apps.Database', array('createSchema'));
+		$application->expects($this->once())
+			->method('apacheWriteDirective');
 		$application->expects($this->once())
 			->method('databaseCreate')
 			->with('database_name', 'user_name');
+		$application->expects($this->once())
+			->method('writeConfig');
+		$application->Database->expects($this->once())
+			->method('createSchema');
 		$application->create();
 		$application->saveAssociated(array('Application' => array('document_root_id' => 1), 'Database' => array('database' => 'database_name', 'login' => 'user_name')));
 		$application->init($application->id);
