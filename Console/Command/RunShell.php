@@ -34,10 +34,10 @@ class RunShell extends AppShell {
 		}
 	}
 
-	public function updateSchema() {
+	public function updateSchemas() {
 		$target = $this->getTarget();
 		if ($target === 'all') {
-			$this->error('Cannot run updateSchema for all');
+			$this->error('Cannot run updateSchemas for all');
 			return false;
 		}
 		$applications = $this->getApplications($target);
@@ -62,7 +62,7 @@ class RunShell extends AppShell {
 		}
 	}
 
-	public function updateSchemaCurrent() {
+	public function updateSchema() {
 		$absolutePath = $this->args[0];
 		$appPath = !empty($this->args[1]) ? $absolutePath . DS . $this->args[1] : $absolutePath;
 		$snapshot = $this->getLatestSchemaSnapshot($appPath);

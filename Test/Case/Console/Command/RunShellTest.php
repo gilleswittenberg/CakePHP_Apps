@@ -109,7 +109,7 @@ class RunShellTest extends CakeTestCase {
 		$this->Shell->expects($this->atLeastOnce())
 			->method('exec');
 		$this->Shell->args = array(ROOT);
-		$this->Shell->updateSchema();
+		$this->Shell->updateSchemas();
 	}
 
 	public function testUpdataSchemaCurrent() {
@@ -124,6 +124,6 @@ class RunShellTest extends CakeTestCase {
 		$this->Shell->expects($this->atLeastOnce())
 			->method('exec');
 		$this->Shell->args = array(ROOT);
-		$this->Shell->updateSchemaCurrent();
+		$this->Shell->updateSchema();
 	}
 }
