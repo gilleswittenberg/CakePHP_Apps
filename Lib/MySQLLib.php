@@ -1,4 +1,5 @@
 <?php
+App::uses('Sanitize', 'Utility');
 class MySQLLib {
 
 	protected $db;
@@ -33,6 +34,8 @@ class MySQLLib {
 	}
 
 	public function grantPrivileges($database, $user) {
+		$database = Sanitize::escape($database);
+		$user = Sanitize::escape($user);
 		$sql = "GRANT ALL PRIVILEGES ON `$database` . * TO '$user'@'localhost'";
 		$this->db->rawQuery($sql);
 	}
@@ -43,6 +46,7 @@ class MySQLLib {
 	}
 
 	public function databaseExists($database) {
+		$database = Sanitize::escape($database);
 		$result = $this->db->fetchAll("SHOW DATABASES LIKE '$database'");
 		return !empty($result);
 	}
