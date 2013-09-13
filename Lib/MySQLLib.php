@@ -20,6 +20,13 @@ class MySQLLib {
 		return $this->db->rawQuery($sql);
 	}
 
+	public function createSchema($serverName, $absolutePath = APP, $appDir = '') {
+		$cakePath = Configure::read('Apps.cakePath');
+		exec($cakePath . ' -app ' . APP . ' apps.current ' . $absolutePath . ' ' . $serverName);
+		exec($cakePath . ' -app ' . $absolutePath . DS . $appDir . ' schema create --yes');
+		exec($cakePath . ' -app ' . APP . ' apps.run updateschemacurrent ' . $absolutePath . ' ' . $appDir);
+	}
+
 	public function createUser($user, $password) {
 		$user = Sanitize::escape($user);
 		$password = Sanitize::escape($password);

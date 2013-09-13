@@ -72,10 +72,7 @@ class Database extends AppsAppModel {
 	}
 
 	public function createSchema($serverName, $absolutePath = APP, $appDir = '') {
-		$cakePath = Configure::read('Apps.cakePath') ?: 'Console' . DS . 'cake';
-		exec(APP . $cakePath . ' -app ' . APP . ' apps.current ' . $absolutePath . ' ' . $serverName);
-		exec(APP . $cakePath . ' -app ' . $absolutePath . DS . $appDir . ' schema create --yes');
-		exec(APP . $cakePath . ' -app ' . APP . ' apps.run updateschemacurrent ' . $absolutePath . ' ' . $appDir);
+		$this->MySQLLib->createSchema($serverName, $absolutePath, $appDir);
 	}
 
 	public function createUser($user) {

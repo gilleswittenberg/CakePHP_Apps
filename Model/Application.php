@@ -174,14 +174,6 @@ class Application extends AppsAppModel {
 		return $password;
 	}
 
-	/*
-	protected function databaseInit($absolutePath, $serverName) {
-		$cakePath = Configure::read('Apps.cakePath') ?: 'Console' . DS . 'cake';
-		exec($absolutePath . DS . $cakePath . ' apps.current ' . $serverName);
-		exec($absolutePath . DS . $cakePath . ' schema create');
-	}
-	*/
-
 	// http://bakery.cakephp.org/articles/eimermusic/2009/02/18/one-core-one-app-multiple-domains
 	protected function writeConfig($documentRoot, $serverName, $database, $login, $password) {
 		$file = new File($documentRoot . DS . Configure::read('Apps.configDir') . DS . $serverName . '.php', true);

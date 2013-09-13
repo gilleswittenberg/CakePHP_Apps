@@ -8,4 +8,4 @@ Configure::write('Apps.schemaFile', 'schema.php');
 //Configure::write('Apps.tablesFile', 'rows.sql');
 Configure::write('Apps.configDir', 'Config' . DS . 'applications');
 Configure::write('Apps.dumpDir', TMP);
-Configure::write('Apps.cakePath', 'lib' . DS . 'Cake' . DS . 'Console' . DS . 'cake');
+Configure::write('Apps.cakePath', APP . 'Console' . DS . 'cake');

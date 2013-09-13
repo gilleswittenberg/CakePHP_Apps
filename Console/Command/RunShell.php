@@ -57,7 +57,7 @@ class RunShell extends AppShell {
 			$absolutePath = $application['DocumentRoot']['absolute_path'];
 			$this->setCurrent($application['Application']['server_name'], $absolutePath);
 			$appPath = empty($appDir) ? $absolutePath : $absolutePath . DS . $appDir;
-			$this->exec(APP . Configure::read('Apps.cakePath') . ' -app ' . $appPath . ' ' . $command);
+			$this->exec(Configure::read('Apps.cakePath') . ' -app ' . $appPath . ' ' . $command);
 		}
 	}
 
@@ -69,8 +69,7 @@ class RunShell extends AppShell {
 			$this->error('No snapshot');
 		}
 		$command = 'schema -app ' . $appPath . ' update --snapshot ' . $snapshot . ' --yes';
-		$cakePath = Configure::read('Apps.cakePath');
-		$this->exec(APP . $cakePath . ' ' . $command);
+		$this->exec(Configure::read('Apps.cakePath') . ' ' . $command);
 	}
 
 	protected function getLatestSchemaSnapshot($appPath) {
@@ -87,13 +86,11 @@ class RunShell extends AppShell {
 	}
 
 	protected function setCurrent($application, $absolutePath) {
-		$cakePath = Configure::read('Apps.cakePath') ?: 'Console' . DS . 'cake';
-		$this->exec(APP . $cakePath . ' Apps.current ' . $absolutePath . ' ' . $application);
+		$this->exec(Configure::read('Apps.cakePath') . ' Apps.current ' . $absolutePath . ' ' . $application);
 	}
 
 	protected function run($appDir, $command) {
-		$cakePath = Configure::read('Apps.cakePath') ?: 'Console' . DS . 'cake';
-		$this->exec($appDir . DS . $cakePath . ' ' . $command);
+		$this->exec(Configure::read('Apps.cakePath') . ' ' . $command);
 	}
 
 	protected function getTarget() {
