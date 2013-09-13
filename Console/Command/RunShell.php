@@ -16,7 +16,7 @@ class RunShell extends AppShell {
 		}
 		$applications = $this->getApplications($target);
 		foreach ($applications as $application) {
-			$this->setCurrent($application['Application']['server_name'], $application['DocumentRoot']['absolute_path']);
+			$this->setCurrent($application['DocumentRoot']['absolute_path'], $application['Application']['server_name']);
 			$this->run($application['DocumentRoot']['absolute_path'], $command);
 		}
     }
@@ -28,7 +28,7 @@ class RunShell extends AppShell {
 		}
 		$applications = $this->getApplications($target);
 		foreach ($applications as $application) {
-			$this->setCurrent($application['Application']['server_name'], $application['DocumentRoot']['absolute_path']);
+			$this->setCurrent($application['DocumentRoot']['absolute_path'], $application['Application']['server_name']);
 			$this->Database->dump($application['Database']['database']);
 			$this->out('Dumping ' . $application['Database']['database']);
 		}
@@ -55,7 +55,8 @@ class RunShell extends AppShell {
  		// run schema shell
 		foreach ($applications as $application) {
 			$absolutePath = $application['DocumentRoot']['absolute_path'];
-			$this->setCurrent($application['Application']['server_name'], $absolutePath);
+			$this->setCurrent($absolutePath, $application['Application']['server_name']);
+			$this->Database->dump($application['Database']['database']);
 			$appPath = empty($appDir) ? $absolutePath : $absolutePath . DS . $appDir;
 			$this->exec(Configure::read('Apps.cakePath') . ' -app ' . $appPath . ' ' . $command);
 		}
@@ -85,7 +86,7 @@ class RunShell extends AppShell {
 		return $snapshot;
 	}
 
-	protected function setCurrent($application, $absolutePath) {
+	protected function setCurrent($absolutePath, $application) {
 		$this->exec(Configure::read('Apps.cakePath') . ' Apps.current ' . $absolutePath . ' ' . $application);
 	}
 
