@@ -36,11 +36,6 @@ class Database extends AppsAppModel {
 	public $password;
 	protected $MySQLLib;
 
-	public function __construct($id = false, $table = null, $ds = null) {
-		parent::__construct($id, $table, $ds);
-		$this->MySQLLib = new MySQLLib();
-	}
-
 	public function afterSave($created) {
 		if ($created) {
 			$data = array();
@@ -64,31 +59,38 @@ class Database extends AppsAppModel {
 	}
 
 	public function createDatabase($name) {
+		$this->initMySQLLib();
 		return $this->MySQLLib->createDatabase($name);
 	}
 
 	public function dropDatabase($name) {
+		$this->initMySQLLib();
 		return $this->MySQLLib->dropDatabase($name);
 	}
 
 	public function createSchema($serverName, $absolutePath = APP, $appDir = '') {
+		$this->initMySQLLib();
 		$this->MySQLLib->createSchema($serverName, $absolutePath, $appDir);
 	}
 
 	public function createUser($user) {
 		$password = $this->getPassword();
+		$this->initMySQLLib();
 		return $this->MySQLLib->createUser($user, $password);
 	}
 
 	public function dropUser($user) {
+		$this->initMySQLLib();
 		return $this->MySQLLib->dropUser($user);
 	}
 
 	public function grantPrivileges($database, $user) {
+		$this->initMySQLLib();
 		return $this->MySQLLib->grantPrivileges($database, $user);
 	}
 
 	public function flushPrivileges() {
+		$this->initMySQLLib();
 		return $this->MySQLLib->flushPrivileges();
 	}
 
@@ -99,11 +101,19 @@ class Database extends AppsAppModel {
 		if (!$filename) {
 			$filename = $database . '_' . date('m-d-Y-His') . '.sql';
 		}
+		$this->initMySQLLib();
 		$this->MySQLLib->dump($database, $filename);
 	}
 
 	public function databaseExists($database) {
+		$this->initMySQLLib();
 		return $this->MySQLLib->databaseExists($database);
+	}
+
+	protected function initMySQLLib() {
+		if (is_null($this->MySQLLib)) {
+			$this->MySQLLib = new MySQLLib();
+		}
 	}
 
 	protected function getPassword($length = 12) {

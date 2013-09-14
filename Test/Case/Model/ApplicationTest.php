@@ -1,5 +1,6 @@
 <?php
 App::uses('Application', 'Apps.Model');
+App::uses('Database', 'Apps.Model');
 App::uses('File', 'Utility');
 
 /**
@@ -67,6 +68,7 @@ class ApplicationTest extends CakeTestCase {
 		$data = $application->read();
 		$this->assertEqual('application-' . $data['Application']['id'] . '.' . $domain, $data['Application']['server_name']);
 		$this->assertEqual('application-' . $data['Application']['id'], $data['Database']['database']);
+		$this->assertEqual('application-' . $data['Application']['id'], $data['Database']['login']);
 	}
 
 	public function testBeforeSaveServerName() {
@@ -99,6 +101,7 @@ class ApplicationTest extends CakeTestCase {
 		$application = $this->getMockForModel('Apps.Application', array('apacheWriteDirective', 'databaseCreate', 'writeConfig', 'enableConfig', 'restartApache', 'linkConfig'));
 		$application->expects($this->exactly(2))
 			->method('linkConfig');
+		$application->Database = $this->getMockForModel('Apps.Database', array('createSchema'));
 		$data = $application->cleanEmptyServerAliases(array('Application' => array('server_name' => 'www.example2.com', 'document_root_id' => 1), 'ServerAlias' => array(array('domain' => 'example.com'), array('domain' => 'example3.com'), array('domain' => ''))));
 		$application->create();
 		$application->saveAssociated($data);

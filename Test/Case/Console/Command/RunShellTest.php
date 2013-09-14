@@ -5,6 +5,7 @@ App::uses('ConsoleOutput', 'Console');
 App::uses('ConsoleInput', 'Console');
 App::uses('Shell', 'Console');
 App::uses('RunShell', 'Apps.Console/Command');
+App::uses('Database', 'Apps.Model');
 
 
 /**
@@ -95,7 +96,7 @@ class RunShellTest extends CakeTestCase {
 		$this->Shell->dump();
 	}
 
-	public function testUpdataSchema() {
+	public function testUpdateSchemas() {
 		$this->Shell = $this->getMock(
 			'RunShell',
 			array('in', 'out', 'hr', 'createFile', 'error', 'err', '_stop', 'setCurrent', 'run', 'getLatestSchemaSnapshot', 'exec'),
@@ -108,11 +109,12 @@ class RunShellTest extends CakeTestCase {
 			->method('setCurrent');
 		$this->Shell->expects($this->atLeastOnce())
 			->method('exec');
+		$this->Shell->Database = $this->getMock('Database', array('dump'));
 		$this->Shell->args = array(ROOT);
 		$this->Shell->updateSchemas();
 	}
 
-	public function testUpdataSchemaCurrent() {
+	public function testUpdateSchema() {
 		$this->Shell = $this->getMock(
 			'RunShell',
 			array('in', 'out', 'hr', 'createFile', 'error', 'err', '_stop', 'setCurrent', 'getLatestSchemaSnapshot', 'exec'),
