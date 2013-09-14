@@ -35,7 +35,7 @@ class AppsAppModel extends AppModel {
 
 	public function __construct($id = false, $table = null, $ds = null) {
 		$dbConfig = Configure::read('Apps.dbConfig');
-		if ($dbConfig) {
+		if ($dbConfig && $dbConfig !== 'default') {
 			$this->useDbConfig = $dbConfig;
 		}
 		parent::__construct($id, $table, $ds);
