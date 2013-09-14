@@ -46,7 +46,7 @@ class ApplicationsController extends AppsAppController {
 		if ($this->request->is('post')) {
 			$this->Application->create();
 			if ($this->Application->saveAssociated($this->Application->cleanEmptyServerAliases($this->request->data))) {
-				$this->Application->init($this->Application->id);
+				$this->Application->init();
 				$this->Session->setFlash(__('The application has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {

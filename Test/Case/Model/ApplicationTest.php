@@ -94,7 +94,7 @@ class ApplicationTest extends CakeTestCase {
 			->method('createSchema');
 		$application->create();
 		$application->saveAssociated(array('Application' => array('document_root_id' => 1), 'Database' => array('database' => 'database_name', 'login' => 'user_name')));
-		$application->init($application->id);
+		$application->init();
 	}
 
 	public function testServerAliases() {
@@ -105,7 +105,7 @@ class ApplicationTest extends CakeTestCase {
 		$data = $application->cleanEmptyServerAliases(array('Application' => array('server_name' => 'www.example2.com', 'document_root_id' => 1), 'ServerAlias' => array(array('domain' => 'example.com'), array('domain' => 'example3.com'), array('domain' => ''))));
 		$application->create();
 		$application->saveAssociated($data);
-		$application->init($application->id);
+		$application->init();
 		$data = $application->read();
 		$this->assertEqual(2, count($data['ServerAlias']));
 	}

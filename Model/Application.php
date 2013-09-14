@@ -95,7 +95,11 @@ class Application extends AppsAppModel {
 			&& preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $domain)   ); //length of each label
 	}
 
-	public function init($id) {
+	public function init($id = null) {
+		$id = $id ?: $this->id;
+		if (!$id) {
+			return false;
+		}
 		$application = $this->find('first', array('conditions' => array('Application.id' => $id)));
 		$absolutePath = $application['DocumentRoot']['absolute_path'];
 		$appDir = $application['DocumentRoot']['app_dir'];

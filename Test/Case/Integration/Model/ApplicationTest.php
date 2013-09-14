@@ -42,8 +42,8 @@ class IntegrationApplicationTest extends CakeTestCase {
 		// create
 		$this->Application->create();
 		$this->Application->saveAssociated(array('Application' => array('document_root_id' => 1), 'Database' => array('id' => '')));
+		$this->Application->init();
 		$id = $this->Application->id;
-		$this->Application->init($id);
 		$this->assertNotEmpty($this->Application->query("SHOW DATABASES LIKE 'application-$id'", false));
 		$this->assertNotEmpty($this->Application->query("SELECT USER FROM mysql.user WHERE User='application-$id'", false));
 		$file = new File(APP . Configure::read('Apps.configDir') . DS . 'application-' . $id . '.' . Configure::read('Apps.domain') . '.php');
@@ -65,8 +65,8 @@ class IntegrationApplicationTest extends CakeTestCase {
 		$application = $this->getMockForModel('Application', array('databaseCreate', 'writeConfig', 'restartApache'));
 		$application->create();
 		$application->saveAssociated(array('Application' => array('document_root_id' => 1), 'Database' => array('id' => '')));
+		$application->init();
 		$id = $application->id;
-		$application->init($id);
 		$file = new File(Configure::read('Apps.httpdRoot') . DS . 'sites-available' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain'));
 		$this->assertTrue($file->exists());
 		$application->saveField('status', '0');
