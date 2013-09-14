@@ -47,25 +47,6 @@ class ServerAlias extends AppsAppModel {
 		)
 	);
 
-	public function beforeSave($cascade = true) {
-		if ($this->exists()) {
-			$serverAlias = $this->find('first', array('conditions' => array('ServerAlias.id' => $this->id)));
-			$this->prevDomain = $serverAlias['ServerAlias']['domain'];
-		}
-	}
-
-	/*
-	public function afterSave($created) {
-		$serverAlias = $this->find('first', array('recursive' => 2, 'conditions' => array('ServerAlias.id' => $this->id)));
-		if (!$created && $this->data['ServerAlias']['domain'] !== $this->prevDomain) {
-			$this->Application->unlink($serverAlias['Application']['DocumentRoot']['absolute_path'], $this->prevDomain);
-		}
-		$apacheLib = new ApacheLib();
-		$apacheLib->writeDirective($serverAlias['Application']['server_name'], $serverAlias['Application']['DocumentRoot']['absolute_path'], $serverAlias['ServerAlias']);
-		$this->Application->linkConfig($serverAlias['Application']['DocumentRoot']['absolute_path'], $serverAlias['Application']['server_name'], $serverAlias['ServerAlias']['domain']);
-	}
-	*/
-
 	public function add($id) {
 		$serverAlias = $this->find('first', array('conditions' => array('ServerAlias.id' => $id)));
 		$this->Application->linkConfig($serverAlias['Application']['DocumentRoot']['absolute_path'], $serverAlias['Appliction']['server_name'], $serverAlias['ServerAlias']['domain']);
