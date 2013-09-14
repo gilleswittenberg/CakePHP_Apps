@@ -87,14 +87,6 @@ class Application extends AppsAppModel {
 		return $data;
 	}
 
-	// http://stackoverflow.com/questions/1755144/how-to-validate-domain-name-in-php/4694816#4694816
-	public function validDomain($check) {
-		$domain = $check['server_name'];
-		return (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $domain) //valid chars check
-			&& preg_match("/^.{1,253}$/", $domain) //overall length check
-			&& preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $domain)   ); //length of each label
-	}
-
 	public function init($id = null) {
 		$id = $id ?: $this->id;
 		if (!$id) {

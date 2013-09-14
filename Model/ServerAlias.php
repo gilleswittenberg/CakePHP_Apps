@@ -29,9 +29,15 @@ class ServerAlias extends AppsAppModel {
 		'domain' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
+				'message' => 'Supply a valid domain'
+			),
+			'domain' => array(
+				'rule' => array('validDomain'),
+				'message' => 'Supply a valid domain'
 			),
 			'unique' => array(
-				'rule' => 'isUnique'
+				'rule' => 'isUnique',
+				'message' => 'ServerAlias already exists'
 			)
 		),
 	);

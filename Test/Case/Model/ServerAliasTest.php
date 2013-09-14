@@ -40,7 +40,11 @@ class ServerAliasTest extends CakeTestCase {
 		parent::tearDown();
 	}
 
-	public function testEmpty() {}
+	public function testValidDomain() {
+		$this->ServerAlias->set(array('domain' => 'invalid_domain'));
+		$this->assertFalse($this->ServerAlias->validates());
+	}
+
 	/*
 	public function testCreateLink() {
 		$this->ServerAlias->save(array('application_id' => 1, 'domain' => 'www.example.com'));

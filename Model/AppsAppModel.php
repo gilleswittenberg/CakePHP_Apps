@@ -40,4 +40,13 @@ class AppsAppModel extends AppModel {
 		}
 		parent::__construct($id, $table, $ds);
 	}
+
+	// http://stackoverflow.com/questions/1755144/how-to-validate-domain-name-in-php/4694816#4694816
+	public function validDomain($check) {
+		$keys = array_keys($check);
+		$domain = $check[$keys[0]];
+		return (preg_match("/^([a-z\d](-*[a-z\d])*)(\.([a-z\d](-*[a-z\d])*))*$/i", $domain) //valid chars check
+			&& preg_match("/^.{1,253}$/", $domain) //overall length check
+			&& preg_match("/^[^\.]{1,63}(\.[^\.]{1,63})*$/", $domain)   ); //length of each label
+	}
 }
