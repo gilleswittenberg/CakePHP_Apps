@@ -1,6 +1,8 @@
 # CakePHP Apps plugin
 CakePHP plugin to manage multiple applications, domains and databases running on same APP and CORE codebase.
 
+[![Build Status](https://travis-ci.org/gilleswittenberg/CakePHP_Apps.png)](https://travis-ci.org/gilleswittenberg/CakePHP_Apps)
+
 ## Requirements
 - This Plugin is written for Debian/Linux running Apache2 and MySQL
 
@@ -58,7 +60,6 @@ public function __construct () {
 - files and webroot folders per application
 - specific Apache redirects per application (redirect http://application-{id}.example.com/favicon to different files)
 - Give Application.status titles instead of integers
-- Split tests into Unit/Integration tests. And set up Travis CI (http://mark-story.com/posts/view/testing-cakephp-plugins-with-travis-ci)
 - Slim down privileges of database Apps user
 - Improve README
 - Add more tests
