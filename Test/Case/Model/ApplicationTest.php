@@ -111,4 +111,18 @@ class ApplicationTest extends CakeTestCase {
 		$data = $application->read();
 		$this->assertEqual(2, count($data['ServerAlias']));
 	}
+
+	public function testDeleteServerAliases() {
+		$application = $this->getMockForModel('Apps.Application', array('apacheWriteDirective', 'rewriteServerAliases', 'restartApache', 'linkConfig', 'unlinkConfig'));
+		$application->Database = $this->getMockForModel('Apps.Database', array('dump', 'dropDatabase', 'dropUser'));
+		$application->expects($this->never())
+			->method('apacheWriteDirective');
+		$application->expects($this->never())
+			->method('rewriteServerAliases');
+		$application->expects($this->exactly(2))
+			->method('unlinkConfig');
+		$application->expects($this->once())
+			->method('restartApache');
+		$application->delete(1);
+	}
 }

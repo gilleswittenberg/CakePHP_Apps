@@ -44,20 +44,4 @@ class ServerAliasTest extends CakeTestCase {
 		$this->ServerAlias->set(array('domain' => 'invalid_domain'));
 		$this->assertFalse($this->ServerAlias->validates());
 	}
-
-	/*
-	public function testCreateLink() {
-		$this->ServerAlias->save(array('application_id' => 1, 'domain' => 'www.example.com'));
-		$this->assertNotEmpty(exec('find -H ' . APP . Configure::read('Apps.configDir') . DS . 'www.example.com.php'));
-		// clean up
-		exec('unlink ' . APP . Configure::read('Apps.configDir') . DS . 'www.example.com.php');
-	}
-
-	public function testDeleteLink() {
-		$this->ServerAlias->save(array('application_id' => 1, 'domain' => 'www.example.com'));
-		$this->assertNotEmpty(exec('find -H ' . APP . Configure::read('Apps.configDir') . DS . 'www.example.com.php'));
-		$this->ServerAlias->delete();
-		$this->assertEmpty(exec('find -H ' . APP . Configure::read('Apps.configDir') . DS . 'www.example.com.php'));
-	}
-	*/
 }

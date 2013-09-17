@@ -69,7 +69,8 @@ class Application extends AppsAppModel {
  */
 	public $hasMany = array(
 		'ServerAlias' => array(
-			'className' => 'Apps.ServerAlias'
+			'className' => 'Apps.ServerAlias',
+			'dependent' => true
 		)
 	);
 
@@ -140,11 +141,11 @@ class Application extends AppsAppModel {
 		$apacheLib = new ApacheLib();
 		$apacheLib->disableDirective($this->deletedRow['Application']['server_name']);
 		$apacheLib->deleteDirective($this->deletedRow['Application']['server_name']);
-		$apacheLib->restart();
+		$this->restartApache();
 	}
 
 	// extracted function to easily mock out in tests
-	protected function apacheWriteDirective($id) {
+	public function apacheWriteDirective($id) {
 		$application = $this->find('first', array('conditions' => array('Application.id' => $id)));
 		$apacheLib = new ApacheLib();
 		$apacheLib->writeDirective($application['Application']['server_name'], $application['DocumentRoot']['absolute_path'], $application['ServerAlias']);
@@ -207,8 +208,13 @@ Configure::write('Database.config', array(
 		exec("unlink $symbolic");
 	}
 
-	protected function restartApache() {
+	public function restartApache() {
 		$apacheLib = new ApacheLib();
 		$apacheLib->restart();
+	}
+
+	public function rewriteServerAliases($id) {
+		$this->apacheWriteDirective($id);
+		$this->restartApache();
 	}
 }

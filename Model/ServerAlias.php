@@ -53,11 +53,13 @@ class ServerAlias extends AppsAppModel {
 		)
 	);
 
-	public function add($id) {
-		$serverAlias = $this->find('first', array('conditions' => array('ServerAlias.id' => $id)));
-		$this->Application->linkConfig($serverAlias['Application']['DocumentRoot']['absolute_path'], $serverAlias['Appliction']['server_name'], $serverAlias['ServerAlias']['domain']);
-		$this->Application->apacheWriteDirective($serverAlias['Application']['id']);
-		$this->Application->restartApache();
+	public $prevServerAlias;
+
+	public function add() {
+		$this->recursive = 2;
+		$serverAlias = $this->find('first', array('conditions' => array('ServerAlias.id' => $this->id)));
+		$this->Application->linkConfig($serverAlias['Application']['DocumentRoot']['absolute_path'] . DS . $serverAlias['Application']['DocumentRoot']['app_dir'], $serverAlias['Application']['server_name'], $serverAlias['ServerAlias']['domain']);
+		$this->Application->rewriteServerAliases($serverAlias['Application']['id']);
 	}
 
 	public function beforeDelete($cascade = true) {
@@ -66,9 +68,7 @@ class ServerAlias extends AppsAppModel {
 		return true;
 	}
 
-	public function afterDelete($cascade = true) {
-		$this->Application->unlinkConfig($this->prevServerAlias['Application']['DocumentRoot']['absolute_path'], $this->prevServerAlias['ServerAlias']['domain']);
-		$this->Application->apacheWriteDirective($this->prevServerAlias['Application']['id']);
-		$this->Application->restartApache();
+	public function afterDelete() {
+		$this->Application->unlinkConfig($this->prevServerAlias['Application']['DocumentRoot']['absolute_path'] . DS . $this->prevServerAlias['Application']['DocumentRoot']['app_dir'], $this->prevServerAlias['ServerAlias']['domain']);
 	}
 }
