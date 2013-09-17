@@ -99,6 +99,8 @@ class ApplicationTest extends CakeTestCase {
 
 	public function testServerAliases() {
 		$application = $this->getMockForModel('Apps.Application', array('apacheWriteDirective', 'databaseCreate', 'writeConfig', 'enableConfig', 'restartApache', 'linkConfig'));
+		$application->expects($this->once())
+			->method('apacheWriteDirective');
 		$application->expects($this->exactly(2))
 			->method('linkConfig');
 		$application->Database = $this->getMockForModel('Apps.Database', array('createSchema'));
