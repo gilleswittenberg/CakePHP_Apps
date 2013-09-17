@@ -53,6 +53,9 @@ class IntegrationApplicationTest extends CakeTestCase {
 		$this->assertEquals($file->read(), $fileServerAlias->read());
 		$file = new File(Configure::read('Apps.httpdRoot') . DS . 'sites-available' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain'));
 		$this->assertTrue($file->exists());
+		$content = $file->read();
+		$this->assertTrue(strpos($content, 'ServerName application-' . $id . '.' . Configure::read('Apps.domain')) !== false);
+		$this->assertTrue(strpos($content, 'ServerAlias a.example.com') !== false);
 
 		// delete
 		$this->Application->delete();
