@@ -35,6 +35,13 @@ class ServerAliasFixture extends CakeTestFixture {
 			'modified' => '2013-06-21 19:41:39',
 			'created' => '2013-06-21 19:41:39'
 		),
+		array(
+			'id' => 2,
+			'application_id' => 1,
+			'domain' => 'subdomain.example1.com',
+			'modified' => '2013-06-21 19:41:39',
+			'created' => '2013-06-21 19:41:39'
+		)
 	);
 
 }

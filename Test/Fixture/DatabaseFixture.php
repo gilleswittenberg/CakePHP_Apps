@@ -34,10 +34,10 @@ class DatabaseFixture extends CakeTestFixture {
 		array(
 			'id' => 1,
 			'application_id' => 1,
-			'host' => 'Lorem ipsum dolor sit amet',
-			'database' => 'Lorem ipsum dolor sit amet',
-			'login' => 'Lorem ipsum dolor sit amet',
-			'password' => 'Lorem ipsum dolor sit amet',
+			'host' => 'localhost',
+			'database' => 'database',
+			'login' => 'username',
+			'password' => 'abcdefgh123',
 			'modified' => '2013-06-13 15:29:50',
 			'created' => '2013-06-13 15:29:50'
 		),
