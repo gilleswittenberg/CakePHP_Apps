@@ -40,7 +40,7 @@ class DocumentRoot extends AppsAppModel {
 		)
 	);
 
-	public function beforeValidate() {
+	public function beforeValidate($options = array()) {
 		if (!empty($this->data['DocumentRoot']['absolute_path'])) {
 			$this->data['DocumentRoot']['absolute_path'] = rtrim($this->data['DocumentRoot']['absolute_path'], '/');
 		}

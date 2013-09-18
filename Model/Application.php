@@ -120,7 +120,7 @@ class Application extends AppsAppModel {
 		$this->restartApache();
 	}
 
-	public function afterSave($created) {
+	public function afterSave($created, $options = array()) {
 		if ($created) {
 			if (empty($this->data['Application']['server_name'])) {
 				$this->saveField('server_name', 'application-' . $this->id . '.' . Configure::read('Apps.domain'));

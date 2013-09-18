@@ -36,7 +36,7 @@ class Database extends AppsAppModel {
 	public $password;
 	protected $MySQLLib;
 
-	public function afterSave($created) {
+	public function afterSave($created, $options = array()) {
 		if ($created) {
 			$data = array();
 			$applicationId = $this->field('application_id');
