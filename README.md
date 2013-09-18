@@ -57,9 +57,7 @@ public function __construct () {
 - Create some apps at /apps/applications/add to see if everything is working fine
 
 ## ToDo
-- files and webroot folders per application
-- specific Apache redirects per application (redirect http://application-{id}.example.com/favicon to different files)
 - Give Application.status titles instead of integers
 - Slim down privileges of database Apps user
 - Improve README
-- Add more tests
+- Clean up
