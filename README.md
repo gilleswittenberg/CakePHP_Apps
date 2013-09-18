@@ -61,5 +61,4 @@ public function __construct () {
 - Give Application.status titles instead of integers
 - Slim down privileges of database Apps user
 - Improve README
-- Clean up
 - Add counter-cache to DocumentRoot for applications
