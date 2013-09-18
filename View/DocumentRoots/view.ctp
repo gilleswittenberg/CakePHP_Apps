@@ -26,10 +26,8 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-		<!--<li><?php echo $this->Html->link(__('Edit Document Root'), array('action' => 'edit', $documentRoot['DocumentRoot']['id'])); ?> </li>-->
 		<li><?php echo $this->Form->postLink(__('Delete Document Root'), array('action' => 'delete', $documentRoot['DocumentRoot']['id']), null, __('Are you sure you want to delete # %s?', $documentRoot['DocumentRoot']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(__('List Document Roots'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Document Root'), array('action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(__('List Applications'), array('controller' => 'applications', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Application'), array('controller' => 'applications', 'action' => 'add')); ?> </li>
 	</ul>

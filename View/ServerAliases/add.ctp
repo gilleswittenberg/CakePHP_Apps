@@ -12,9 +12,7 @@
 <div class="actions">
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
-
-		<li><?php echo $this->Html->link(__('List Server Aliases'), array('action' => 'index')); ?></li>
 		<li><?php echo $this->Html->link(__('List Applications'), array('controller' => 'applications', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Application'), array('controller' => 'applications', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('View Application'), array('controller' => 'applications', 'action' => 'view', $this->request->data['ServerAlias']['application_id'])); ?> </li>
 	</ul>
 </div>
