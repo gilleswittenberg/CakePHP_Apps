@@ -15,7 +15,7 @@ class ApacheTest extends CakeTestCase {
     }
 
     public function testGetDirectiveContent() {
-		$expected = "<VirtualHost *:80>\nServerName www.example.com\nDocumentRoot /var/www\n</VirtualHost>";
+		$expected = "<VirtualHost *:80>\nServerName www.example.com\nDocumentRoot /var/www\nRewriteEngine on\nRewriteRule ^favicon\.ico$ /applications/www.example.com/favicon.ico [L]\n</VirtualHost>";
         $return = $this->Apache->writeDirective('www.example.com', '/var/www');
         $this->assertEquals($return['content'], $expected);
 		// clean up
@@ -24,7 +24,7 @@ class ApacheTest extends CakeTestCase {
     }
 
     public function testDirectiveContentServerAliases() {
-		$expected = "<VirtualHost *:80>\nServerName www.example.com\nServerAlias www2.example.com\nServerAlias www.example2.com\nDocumentRoot /var/www\n</VirtualHost>";
+		$expected = "<VirtualHost *:80>\nServerName www.example.com\nServerAlias www2.example.com\nServerAlias www.example2.com\nDocumentRoot /var/www\nRewriteEngine on\nRewriteRule ^favicon\.ico$ /applications/www.example.com/favicon.ico [L]\n</VirtualHost>";
         $return = $this->Apache->writeDirective('www.example.com', '/var/www', array(array('domain' => 'www2.example.com'), array('domain' => 'www.example2.com')));
         $this->assertEquals($expected, $return['content']);
 		// clean up
