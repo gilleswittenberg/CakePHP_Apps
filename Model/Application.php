@@ -26,7 +26,8 @@ class Application extends AppsAppModel {
 		'server_name' => array(
 			'domain' => array(
 				'rule' => array('validDomain'),
-				'message' => 'Supply a valid ServerName'
+				'message' => 'Supply a valid ServerName',
+				'allowEmpty' => true
 			),
 			'unique' => array(
 				'rule' => array('isUnique'),
