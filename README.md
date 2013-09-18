@@ -61,3 +61,4 @@ public function __construct () {
 - Slim down privileges of database Apps user
 - Improve README
 - Clean up
+- Add counter-cache to DocumentRoot for applications
