@@ -16,7 +16,7 @@ App::uses('Debugger', 'Utility');
 
 <p>
 	<?php
-		$output = (int)exec('sudo -n uptime 2>&1|grep "load"|wc -l');
+		$output = exec('sudo -l');
 		if ($output) {
 			echo '<span class="notice success">';
 				echo __d('cake_dev', 'Apache user is sudoer.');
