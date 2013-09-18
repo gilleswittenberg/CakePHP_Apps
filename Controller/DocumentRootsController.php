@@ -50,32 +50,6 @@ class DocumentRootsController extends AppsAppController {
 	}
 
 /**
- * edit method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
- 	/*
-	public function edit($id = null) {
-		if (!$this->DocumentRoot->exists($id)) {
-			throw new NotFoundException(__('Invalid document root'));
-		}
-		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->DocumentRoot->save($this->request->data)) {
-				$this->Session->setFlash(__('The document root has been saved'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The document root could not be saved. Please, try again.'));
-			}
-		} else {
-			$options = array('conditions' => array('DocumentRoot.' . $this->DocumentRoot->primaryKey => $id));
-			$this->request->data = $this->DocumentRoot->find('first', $options);
-		}
-	}
-	*/
-
-/**
  * delete method
  *
  * @throws NotFoundException
