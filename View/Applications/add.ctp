@@ -4,7 +4,7 @@
 		<legend><?php echo __('Add Application'); ?></legend>
 	<?php
 		echo $this->Form->input('document_root_id');
-		echo $this->Form->input('server_name');
+		echo $this->Form->input('server_name', array('required' => false));
 		echo $this->Form->input('Database.database', array('required' => false));
 		echo $this->Form->input('Database.login', array('required' => false));
 		//echo $this->Form->input('status', array('type' => 'hidden'));
