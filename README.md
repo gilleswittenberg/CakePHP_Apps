@@ -10,6 +10,7 @@ CakePHP plugin to manage multiple applications, domains and databases running on
 - Install using Composer (https://packagist.org/packages/gilleswittenberg/apps)
 	- add ```require: {"gilleswittenberg/apps": "dev-master"}```
 - Install copying or cloning to Plugin/Apps
+- Add ```CakePlugin::load('Apps', array('bootstrap' => true, 'routes' => true));``` to Config/bootstrap.php
 
 ## Setup Debian
 - Install sudo (as root) ```apt-get install sudo```
