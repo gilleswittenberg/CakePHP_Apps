@@ -118,6 +118,42 @@ foreach ($documentRoots as $documentRoot): ?>
 		echo '</span>';
 	endif;
 
+	// webrootDir
+	$dir = $documentRoot['DocumentRoot']['absolute_path'] . DS . $documentRoot['DocumentRoot']['app_dir'] . DS . 'webroot' . DS . 'applications';
+	if (is_dir($dir)):
+		if (is_writable($dir)):
+			echo '<span class="notice success">';
+				echo $dir . __d('cake_dev', ' is writable.');
+			echo '</span>';
+		else:
+			echo '<span class="notice">';
+				echo $dir . __d('cake_dev', ' is not writable.');
+			echo '</span>';
+		endif;
+	else:
+		echo '<span class="notice">';
+			echo $dir . __d('cake_dev', ' is not a dir.');
+		echo '</span>';
+	endif;
+
+	// filesDir
+	$dir = $documentRoot['DocumentRoot']['absolute_path'] . DS . $documentRoot['DocumentRoot']['app_dir'] . DS . 'files';
+	if (is_dir($dir)):
+		if (is_writable($dir)):
+			echo '<span class="notice success">';
+				echo $dir . __d('cake_dev', ' is writable.');
+			echo '</span>';
+		else:
+			echo '<span class="notice">';
+				echo $dir . __d('cake_dev', ' is not writable.');
+			echo '</span>';
+		endif;
+	else:
+		echo '<span class="notice">';
+			echo $dir . __d('cake_dev', ' is not a dir.');
+		echo '</span>';
+	endif;
+
 	// schema.php
 	$schemaFile = $documentRoot['DocumentRoot']['absolute_path'] . DS . $documentRoot['DocumentRoot']['app_dir'] . DS . 'Config' . DS . 'Schema' . DS . Configure::read('Apps.schemaFile');
 	if (is_file($schemaFile)):

@@ -106,7 +106,11 @@ class Application extends AppsAppModel {
 		$password = $this->databaseCreate($databaseName, $databaseLogin, $absolutePath);
 		// write CakePHP config
 		$this->writeConfig($absolutePath . DS . $appDir, $serverName, $applicationId, $applicationId, $password);
-		// link config for ServerAliases
+		// create webroot dir
+		$this->createWebrootDir($absolutePath . DS . $appDir, $serverName);
+		// create files dir
+		$this->createFilesDir($absolutePath . DS . $appDir, $serverName);
+		// link config, webrootDir and filesDir for ServerAliases
 		foreach ($application['ServerAlias'] as $serverAlias) {
 			$this->linkConfig($absolutePath . DS . $appDir, $serverName, $serverAlias['domain']);
 		}
@@ -188,8 +192,18 @@ Configure::write('Database.config', array(
 		'encoding' => 'utf8'
 	)
 ));
+define(WWW_ROOT_APP, WWW_ROOT . 'applications' . DS . '$serverName' . DS);
+define(FILES_APP, APP . 'files' . DS . '$serverName' . DS);
 ";
 		$file->write($content);
+	}
+
+	protected function createWebrootDir($appDir, $serverName) {
+		$folder = new Folder($appDir . DS . 'webroot' . DS . 'applications' . DS . $serverName, true, 755);
+	}
+
+	protected function createFilesDir($appDir, $serverName) {
+		$folder = new Folder($appDir . DS . 'files' . DS . $serverName, true, 755);
 	}
 
 	protected function deleteConfig($documentRoot, $serverName) {

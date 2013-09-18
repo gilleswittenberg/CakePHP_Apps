@@ -56,6 +56,8 @@ class IntegrationApplicationTest extends CakeTestCase {
 		$content = $file->read();
 		$this->assertTrue(strpos($content, 'ServerName application-' . $id . '.' . Configure::read('Apps.domain')) !== false);
 		$this->assertTrue(strpos($content, 'ServerAlias a.example.com') !== false);
+		$this->assertTrue(is_dir(APP . 'webroot' . DS . 'applications' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain')));
+		$this->assertTrue(is_dir(APP . 'files' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain')));
 
 		// delete
 		$this->Application->delete();
