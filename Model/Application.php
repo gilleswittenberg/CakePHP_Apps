@@ -1,5 +1,6 @@
 <?php
 App::uses('File', 'Utility');
+App::uses('Folder', 'Utility');
 App::uses('ApacheLib', 'Apps.Lib');
 /**
  * Application Model
