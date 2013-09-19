@@ -76,7 +76,8 @@ class Database extends AppsAppModel {
 	public function createUser($user) {
 		$password = $this->getPassword();
 		$this->initMySQLLib();
-		return $this->MySQLLib->createUser($user, $password);
+		$this->MySQLLib->createUser($user, $password);
+		return $password;
 	}
 
 	public function dropUser($user) {

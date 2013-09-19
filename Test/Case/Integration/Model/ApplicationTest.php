@@ -48,6 +48,7 @@ class IntegrationApplicationTest extends CakeTestCase {
 		$this->assertNotEmpty($this->Application->query("SELECT USER FROM mysql.user WHERE User='application-$id'", false));
 		$file = new File(APP . Configure::read('Apps.configDir') . DS . 'application-' . $id . '.' . Configure::read('Apps.domain') . '.php');
 		$this->assertTrue($file->exists());
+		$this->assertRegExp("/'password' => '[A-Za-z0-9]{4,}'/", $file->read());
 		$fileServerAlias = new File(APP . Configure::read('Apps.configDir') . DS . 'a.example.com.php');
 		$this->assertTrue($fileServerAlias->exists());
 		$this->assertEquals($file->read(), $fileServerAlias->read());
