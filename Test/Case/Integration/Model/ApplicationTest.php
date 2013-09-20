@@ -17,6 +17,8 @@ class IntegrationApplicationTest extends CakeTestCase {
 		'plugin.apps.application', 'plugin.apps.document_root', 'plugin.apps.database', 'plugin.apps.server_alias'
 	);
 
+	protected $applicationId;
+
 /**
  * setUp method
  *
@@ -33,6 +35,9 @@ class IntegrationApplicationTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
+		$this->Application->query("DROP DATABASE IF EXISTS `application-$this->applicationId`", false);
+		$this->Application->query("GRANT USAGE ON *.* TO 'application-$this->applicationId'@'localhost'", false);
+		$this->Application->query("DROP USER 'application-$this->applicationId'@'localhost'", false);
 		unset($this->Application);
 
 		parent::tearDown();
@@ -43,13 +48,11 @@ class IntegrationApplicationTest extends CakeTestCase {
 		$this->Application->create();
 		$this->Application->saveAssociated(array('Application' => array('document_root_id' => 1), 'Database' => array('id' => ''), 'ServerAlias' => array(array('domain' => 'a.example.com'))));
 		$this->Application->init();
-		$id = $this->Application->id;
+		$this->applicationId = $id = $this->Application->id;
 		// database
 		$this->assertNotEmpty($this->Application->query("SHOW DATABASES LIKE 'application-$id'", false));
 		// database user
 		$this->assertNotEmpty($this->Application->query("SELECT USER FROM mysql.user WHERE User='application-$id'", false));
-		// database tables
-		$this->assertNotEmpty($this->Application->query("SHOW TABLES FROM `application-$id`", false), 'Database has tables');
 		// CakePHP config file
 		$file = new File(APP . Configure::read('Apps.configDir') . DS . 'application-' . $id . '.' . Configure::read('Apps.domain') . '.php');
 		$this->assertTrue($file->exists());
@@ -59,6 +62,8 @@ class IntegrationApplicationTest extends CakeTestCase {
 		$fileServerAlias = new File(APP . Configure::read('Apps.configDir') . DS . 'a.example.com.php');
 		$this->assertTrue($fileServerAlias->exists());
 		$this->assertEquals($file->read(), $fileServerAlias->read());
+		// database tables
+		$this->assertNotEmpty($this->Application->query("SHOW TABLES FROM `application-$id`", false), 'Database has tables');
 		// Apache directive
 		$file = new File(Configure::read('Apps.httpdRoot') . DS . 'sites-available' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain'));
 		$this->assertTrue($file->exists());
