@@ -76,6 +76,6 @@ class DocumentRootTest extends CakeTestCase {
 
 	public function testAfterFind() {
 		$documentRoot = $this->DocumentRoot->findById(1);
-		$this->assertEquals(ROOT . DS, $documentRoot['DocumentRoot']['app_path']);
+		$this->assertEquals(APP, $documentRoot['DocumentRoot']['app_path']);
 	}
 }
