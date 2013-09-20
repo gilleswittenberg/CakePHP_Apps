@@ -24,7 +24,7 @@ class MySQLLib {
 		$cakePath = Configure::read('Apps.cakePath');
 		exec($cakePath . ' -app ' . APP . ' apps.current ' . $absolutePath . ' ' . $serverName);
 		exec($cakePath . ' -app ' . $absolutePath . DS . $appDir . ' schema create --yes');
-		exec($cakePath . ' -app ' . APP . ' apps.run updateschema' . $absolutePath . ' ' . $appDir);
+		exec($cakePath . ' -app ' . APP . ' apps.run updateschema ' . $absolutePath . ' ' . $appDir);
 	}
 
 	public function createUser($user, $password) {
