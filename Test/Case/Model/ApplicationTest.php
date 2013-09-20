@@ -81,7 +81,7 @@ class ApplicationTest extends CakeTestCase {
 
 	public function testInit() {
 		$domain = Configure::read('Apps.domain');
-		$application = $this->getMockForModel('Apps.Application', array('apacheWriteDirective', 'databaseCreate', 'writeConfig', 'enableConfig', 'restartApache'));
+		$application = $this->getMockForModel('Apps.Application', array('apacheWriteDirective', 'databaseCreate', 'writeConfig', 'enableConfig', 'restartApache', 'createWebrootDir', 'createFilesDir'));
 		$application->Database = $this->getMockForModel('Apps.Database', array('createSchema'));
 		$application->expects($this->once())
 			->method('apacheWriteDirective');
@@ -98,7 +98,7 @@ class ApplicationTest extends CakeTestCase {
 	}
 
 	public function testServerAliases() {
-		$application = $this->getMockForModel('Apps.Application', array('apacheWriteDirective', 'databaseCreate', 'writeConfig', 'enableConfig', 'restartApache', 'linkConfig'));
+		$application = $this->getMockForModel('Apps.Application', array('apacheWriteDirective', 'databaseCreate', 'writeConfig', 'enableConfig', 'restartApache', 'linkConfig', 'createWebrootDir', 'createFilesDir'));
 		$application->expects($this->once())
 			->method('apacheWriteDirective');
 		$application->expects($this->exactly(2))
