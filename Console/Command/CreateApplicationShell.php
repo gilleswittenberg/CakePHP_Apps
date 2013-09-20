@@ -14,6 +14,8 @@ class CreateApplicationShell extends AppShell {
 			$this->error('No valid DocumentRoot');
 			return false;
 		}
-		$this->Application->saveAssociated(array('Application' => array('document_root_id' => $documentRoot['DocumentRoot']['id']), 'Database' => array('id' => '')));
+		if ($this->Application->saveAssociated(array('Application' => array('document_root_id' => $documentRoot['DocumentRoot']['id']), 'Database' => array('id' => '')))) {
+			$this->Application->init();
+		}
 	}
 }

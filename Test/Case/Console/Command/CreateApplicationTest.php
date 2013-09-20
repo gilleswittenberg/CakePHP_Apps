@@ -5,7 +5,7 @@ App::uses('ConsoleOutput', 'Console');
 App::uses('ConsoleInput', 'Console');
 App::uses('Shell', 'Console');
 App::uses('CreateApplicationShell', 'Apps.Console/Command');
-
+App::uses('Application', 'Apps.Model');
 
 /**
  * CurrentShellTest class
@@ -70,6 +70,7 @@ class CreateApplicationShellTest extends CakeTestCase {
 		$this->Shell->expects($this->never())
 			->method('error');
 		$this->Shell->args = array(ROOT);
+		$this->Shell->Application = $this->getMockForModel('Application', array('saveAssociated', 'init'));
 		$this->Shell->main();
 	}
 }
