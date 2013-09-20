@@ -2,7 +2,7 @@
 App::uses('AppShell', 'Console/Command');
 class CurrentShell extends AppShell {
 
-	public $uses = array('DocumentRoot');
+	public $uses = array('Apps.DocumentRoot');
 
 	public function main() {
 		if (empty($this->args[0])) {
@@ -15,7 +15,7 @@ class CurrentShell extends AppShell {
 		}
 		// print current application
 		if (empty($this->args[1])) {
-			$fileName = $documentRoot['DocumentRoot']['absolute_path'] . DS . $documentRoot['DocumentRoot']['app_dir'] . DS . Configure::read('Apps.configDir') . DS . 'current_application';
+			$fileName = $documentRoot['DocumentRoot']['app_path'] . Configure::read('Apps.configDir') . DS . 'current_application';
 			if ($this->fileExists($fileName)) {
 				echo $this->exec('readlink ' . $fileName);
 				return;
@@ -25,7 +25,7 @@ class CurrentShell extends AppShell {
 		}
 		// link current application
 		else {
-			$configDir = $documentRoot['DocumentRoot']['absolute_path'] . DS . $documentRoot['DocumentRoot']['app_dir'] . DS . Configure::read('Apps.configDir') . DS;
+			$configDir = $documentRoot['DocumentRoot']['app_path'] . Configure::read('Apps.configDir') . DS;
 			$fileName = $configDir . $this->args[1] . '.php';
 			if ($this->fileExists($fileName)) {
 				$this->exec('ln -fs ' . $fileName . ' ' . $configDir . 'current_application');

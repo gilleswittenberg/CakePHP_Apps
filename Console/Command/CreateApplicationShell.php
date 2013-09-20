@@ -2,7 +2,7 @@
 App::uses('AppShell', 'Console/Command');
 class CreateApplicationShell extends AppShell {
 
-	public $uses = array('DocumentRoot', 'Application');
+	public $uses = array('Apps.DocumentRoot', 'Apps.Application');
 
 	public function main() {
 		if (empty($this->args[0])) {

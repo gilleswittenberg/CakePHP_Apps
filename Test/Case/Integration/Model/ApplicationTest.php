@@ -49,7 +49,7 @@ class IntegrationApplicationTest extends CakeTestCase {
 		// database user
 		$this->assertNotEmpty($this->Application->query("SELECT USER FROM mysql.user WHERE User='application-$id'", false));
 		// database tables
-		$this->assertNotEmpty($this->Application->query("SHOW TABLES FROM `application-$id`", false));
+		$this->assertNotEmpty($this->Application->query("SHOW TABLES FROM `application-$id`", false), 'Database has tables');
 		// CakePHP config file
 		$file = new File(APP . Configure::read('Apps.configDir') . DS . 'application-' . $id . '.' . Configure::read('Apps.domain') . '.php');
 		$this->assertTrue($file->exists());
