@@ -73,4 +73,9 @@ class DocumentRootTest extends CakeTestCase {
 		// false cause DocumentRoot.1 has applications
 		$this->assertFalse($this->DocumentRoot->delete());
 	}
+
+	public function testAfterFind() {
+		$documentRoot = $this->DocumentRoot->findById(1);
+		$this->assertEquals(ROOT . DS, $documentRoot['DocumentRoot']['app_path']);
+	}
 }

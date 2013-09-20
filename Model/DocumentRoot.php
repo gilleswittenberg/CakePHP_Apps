@@ -57,4 +57,17 @@ class DocumentRoot extends AppsAppModel {
 		}
 		return true;
 	}
+
+	public function afterFind($results, $primary = false) {
+		foreach ($results as &$result) {
+			if (isset($result['DocumentRoot']['absolute_path']) && isset($result['DocumentRoot']['app_dir'])) {
+				$appPath = $result['DocumentRoot']['absolute_path'] . DS;
+				if (!empty($result['DocumentRoot']['app_dir'])) {
+					$appPath .= $result['DocumentRoot']['app_dir'] . DS;
+				}
+				$result['DocumentRoot']['app_path'] = $appPath;
+			}
+		}
+		return $results;
+	}
 }
