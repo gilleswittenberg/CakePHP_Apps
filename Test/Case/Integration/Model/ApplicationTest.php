@@ -44,19 +44,28 @@ class IntegrationApplicationTest extends CakeTestCase {
 		$this->Application->saveAssociated(array('Application' => array('document_root_id' => 1), 'Database' => array('id' => ''), 'ServerAlias' => array(array('domain' => 'a.example.com'))));
 		$this->Application->init();
 		$id = $this->Application->id;
+		// database
 		$this->assertNotEmpty($this->Application->query("SHOW DATABASES LIKE 'application-$id'", false));
+		// database user
 		$this->assertNotEmpty($this->Application->query("SELECT USER FROM mysql.user WHERE User='application-$id'", false));
+		// database tables
+		$this->assertNotEmpty($this->Application->query("SHOW TABLES FROM `application-$id`", false));
+		// CakePHP config file
 		$file = new File(APP . Configure::read('Apps.configDir') . DS . 'application-' . $id . '.' . Configure::read('Apps.domain') . '.php');
 		$this->assertTrue($file->exists());
+		// CakePHP config file password
 		$this->assertRegExp("/'password' => '[A-Za-z0-9]{4,}'/", $file->read());
+		// CakePHP config file link
 		$fileServerAlias = new File(APP . Configure::read('Apps.configDir') . DS . 'a.example.com.php');
 		$this->assertTrue($fileServerAlias->exists());
 		$this->assertEquals($file->read(), $fileServerAlias->read());
+		// Apache directive
 		$file = new File(Configure::read('Apps.httpdRoot') . DS . 'sites-available' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain'));
 		$this->assertTrue($file->exists());
 		$content = $file->read();
 		$this->assertTrue(strpos($content, 'ServerName application-' . $id . '.' . Configure::read('Apps.domain')) !== false);
 		$this->assertTrue(strpos($content, 'ServerAlias a.example.com') !== false);
+		// App dirs
 		$this->assertTrue(is_dir(APP . 'webroot' . DS . 'applications' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain')));
 		$this->assertTrue(is_dir(APP . 'files' . DS . 'application-' . $id . '.' . Configure::read('Apps.domain')));
 
