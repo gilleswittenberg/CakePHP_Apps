@@ -87,8 +87,6 @@ class RunShellTest extends CakeTestCase {
 			array('in', 'out', 'hr', 'createFile', 'error', 'err', '_stop', 'setCurrent'),
 			array($this->out, $this->out, $this->in)
 		);
-		$this->Shell->expects($this->atLeastOnce())
-			->method('setCurrent');
 		$this->Shell->Database = $this->getMock('Database');
 		$this->Shell->Database->expects($this->atLeastOnce())
 			->method('dump');

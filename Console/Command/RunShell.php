@@ -28,7 +28,6 @@ class RunShell extends AppShell {
 		}
 		$applications = $this->getApplications($target);
 		foreach ($applications as $application) {
-			$this->setCurrent($application['DocumentRoot']['absolute_path'], $application['Application']['server_name']);
 			$this->Database->dump($application['Database']['database']);
 			$this->out('Dumping ' . $application['Database']['database']);
 		}
