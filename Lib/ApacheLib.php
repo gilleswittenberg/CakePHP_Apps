@@ -42,7 +42,7 @@ class ApacheLib {
 		$content .= 'DocumentRoot ' . $documentRoot . "\n";
 		// redirect favicon.ico
 		$content .= 'RewriteEngine on' . "\n";
-		$content .= 'RewriteRule ^favicon\.ico$ /applications/' . $serverName . '/favicon.ico [L]' . "\n";
+		$content .= 'RewriteRule ^/favicon\.ico$ /applications/' . $serverName . '/favicon.ico [L]' . "\n";
 		// close virtual host
 		$content .= '</VirtualHost>';
 		return $content;
