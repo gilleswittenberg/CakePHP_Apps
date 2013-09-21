@@ -194,7 +194,7 @@ Configure::write('Database.config', array(
 		'encoding' => 'utf8'
 	)
 ));
-define('WWW_ROOT_APP', WWW_ROOT . 'applications' . DS . '$serverName' . DS);
+define('WEBROOT_DIR_APP', DS . 'applications' . DS . '$serverName' . DS);
 define('FILES_APP', APP . 'files' . DS . '$serverName' . DS);
 ";
 		$file->write($content);
