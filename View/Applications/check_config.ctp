@@ -81,20 +81,6 @@ App::uses('Debugger', 'Utility');
 	?>
 </p>
 
-<p>
-	<?php
-		if (file_exists(Configure::read('Apps.sqlDir') . DS . Configure::read('Apps.schemaFile'))):
-			echo '<span class="notice success">';
-				echo __d('cake_dev', 'Schema file is present.');
-			echo '</span>';
-		else:
-			echo '<span class="notice">';
-				echo __d('cake_dev', 'Schema file is not present.');
-			echo '</span>';
-		endif;
-	?>
-</p>
-
 <h2><?php echo __('Document Roots'); ?></h2>
 <?php
 foreach ($documentRoots as $documentRoot): ?>
@@ -155,7 +141,7 @@ foreach ($documentRoots as $documentRoot): ?>
 	endif;
 
 	// schema.php
-	$schemaFile = $documentRoot['DocumentRoot']['absolute_path'] . DS . $documentRoot['DocumentRoot']['app_dir'] . DS . 'Config' . DS . 'Schema' . DS . Configure::read('Apps.schemaFile');
+	$schemaFile = $documentRoot['DocumentRoot']['absolute_path'] . DS . $documentRoot['DocumentRoot']['app_dir'] . DS . 'Config' . DS . 'Schema' . DS . 'schema.php';
 	if (is_file($schemaFile)):
 		echo '<span class="notice success">';
 			echo __d('cake_dev', '%s is present.', $schemaFile);
@@ -167,6 +153,3 @@ foreach ($documentRoots as $documentRoot): ?>
 	endif;
 endforeach;
 ?>
-
-<!--
--->
