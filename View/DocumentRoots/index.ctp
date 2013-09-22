@@ -42,6 +42,7 @@
 	<h3><?php echo __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('New Document Root'), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('Check Config'), array('controller' => 'applications', 'action' => 'check_config')); ?></li>
 		<li><?php echo $this->Html->link(__('List Applications'), array('controller' => 'applications', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(__('New Application'), array('controller' => 'applications', 'action' => 'add')); ?> </li>
 	</ul>
