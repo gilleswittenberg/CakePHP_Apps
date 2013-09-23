@@ -1,9 +1,9 @@
-# CakePHP Apps plugin
+# CakePHP Apps plugin [![Build Status](https://travis-ci.org/gilleswittenberg/CakePHP_Apps.png)](https://travis-ci.org/gilleswittenberg/CakePHP_Apps)
 CakePHP plugin to manage multiple applications, domains and databases running on same APP and CORE codebase.
 
-[![Build Status](https://travis-ci.org/gilleswittenberg/CakePHP_Apps.png)](https://travis-ci.org/gilleswittenberg/CakePHP_Apps)
-
 ## Requirements
+- CakePHP 2.0+
+- PHP 5.3.0
 - This Plugin is written for Debian/Linux running Apache2 and MySQL
 
 ## Installation
@@ -60,5 +60,4 @@ public function __construct () {
 ## ToDo
 - Give Application.status titles instead of integers
 - Slim down privileges of database Apps user
-- Improve README
 - Add counter-cache to DocumentRoot for applications
