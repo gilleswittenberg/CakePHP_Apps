@@ -6,7 +6,7 @@ class ApacheLib {
 		$content = $this->getDirectiveContent($serverName, $documentRoot, $serverAliases);
 		// write file
 		$filename = Configure::read('Apps.httpdRoot') . DS . 'sites-available' . DS . $serverName;
-		$file = new File($filename, true, 0644);
+		$file = new File($filename, true, 0664);
 		$file->write($content);
 		return array('content' => $content, 'filename' => $filename);
 	}

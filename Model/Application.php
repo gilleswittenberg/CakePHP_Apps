@@ -179,7 +179,7 @@ class Application extends AppsAppModel {
 
 	// http://bakery.cakephp.org/articles/eimermusic/2009/02/18/one-core-one-app-multiple-domains
 	protected function writeConfig($documentRoot, $serverName, $database, $login, $password) {
-		$file = new File($documentRoot . DS . Configure::read('Apps.configDir') . DS . $serverName . '.php', true);
+		$file = new File($documentRoot . DS . Configure::read('Apps.configDir') . DS . $serverName . '.php', true, 0664);
 		$content = "<?php
 Configure::write('Database.config', array(
 	'default' => array(
@@ -201,15 +201,15 @@ define('FILES_APP', APP . 'files' . DS . '$serverName' . DS);
 	}
 
 	protected function createWebrootDir($appDir, $serverName) {
-		$folder = new Folder($appDir . DS . 'webroot' . DS . 'applications' . DS . $serverName, true, 755);
+		$folder = new Folder($appDir . DS . 'webroot' . DS . 'applications' . DS . $serverName, true, 0775);
 	}
 
 	protected function createFilesDir($appDir, $serverName) {
-		$folder = new Folder($appDir . DS . 'files' . DS . $serverName, true, 755);
+		$folder = new Folder($appDir . DS . 'files' . DS . $serverName, true, 0775);
 	}
 
 	protected function deleteConfig($documentRoot, $serverName) {
-		$file = new File($documentRoot . DS . Configure::read('Apps.configDir') . DS . $serverName . '.php', true);
+		$file = new File($documentRoot . DS . Configure::read('Apps.configDir') . DS . $serverName . '.php', true, 0664);
 		$file->delete();
 	}
 
