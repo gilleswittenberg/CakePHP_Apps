@@ -98,7 +98,7 @@ class RunShell extends AppShell {
 			$this->error('No target');
 			return false;
 		}
-		$arg0 = $this->args[0];
+		$arg0 = rtrim($this->args[0], '/');
 		if ($arg0 === 'all') {
 			return 'all';
 		} else if ($this->DocumentRoot->hasAny(array('absolute_path' => $arg0))) {
