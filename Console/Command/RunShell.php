@@ -68,7 +68,7 @@ class RunShell extends AppShell {
 		if (!$snapshot) {
 			$this->error('No snapshot');
 		}
-		$command = 'schema -app ' . $appPath . ' update --snapshot ' . $snapshot . ' --yes';
+		$command = '-app ' . $appPath . ' schema update --snapshot ' . $snapshot . ' --yes';
 		$this->exec(Configure::read('Apps.cakePath') . ' ' . $command);
 	}
 
