@@ -42,10 +42,10 @@ class DocumentRoot extends AppsAppModel {
 
 	public function beforeValidate($options = array()) {
 		if (!empty($this->data['DocumentRoot']['absolute_path'])) {
-			$this->data['DocumentRoot']['absolute_path'] = rtrim($this->data['DocumentRoot']['absolute_path'], '/');
+			$this->data['DocumentRoot']['absolute_path'] = rtrim($this->data['DocumentRoot']['absolute_path'], DS);
 		}
 		if (!empty($this->data['DocumentRoot']['app_dir'])) {
-			$this->data['DocumentRoot']['app_dir'] = trim($this->data['DocumentRoot']['app_dir'], '/');
+			$this->data['DocumentRoot']['app_dir'] = trim($this->data['DocumentRoot']['app_dir'], DS);
 		}
 		return true;
 	}
